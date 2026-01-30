@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUOS - Complete SO User Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* Page Container - hide/show pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* ===== HOMEPAGE STYLES ===== */
+        /* Top Navigation Bar */
+        .top-nav {
+            background-color: #0a2540;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background-color: #0948b7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-left: 40px;
+        }
+
+        .nav-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .nav-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .sign-in-button {
+            background-color: white;
+            color: #0a2540;
+            padding: 10px 32px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .sign-in-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .help-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0a2540 0%, #1a4d6d 50%, #2a7a9f 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(41, 128, 185, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(52, 152, 219, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 12px;
+        }
+
+        .hero-tagline {
+            font-size: 18px;
+            color: rgba(255,255,255,0.9);
+            font-weight: 300;
+        }
+
+        /* Cards Section */
+        .cards-section {
+            max-width: 1400px;
+            margin: -60px auto 0;
+            padding: 0 40px 80px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 48px 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .card:hover .card-button-primary {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0a2540;
+            margin-bottom: 20px;
+        }
+
+        .card-description {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .card-button-primary {
+            display: inline-block;
+            padding: 16px 40px;
+            background-color: #0948b7;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #0948b7;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            opacity: 0;
+            visibility: hidden;
+            cursor: pointer;
+            border: none;
+        }
+
+        .card-button-primary:hover {
+            background-color: #073a94;
+            border-color: #073a94;
+        }
+
+        .inline-link {
+            color: #0948b7;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .inline-link:hover {
+            color: #073a94;
+        }
+
+        /* ===== MODAL STYLES ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        /* Sign-in Modal */
+        .signin-modal {
+            background-color: white;
+            border-radius: 8px;
+            padding: 60px;
+            text-align: center;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .signin-logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+            background: linear-gradient(135deg, #0948b7 0%, #26a69a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signin-logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .signin-logo-text {
+            font-size: 64px;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signin-button {
+            width: 100%;
+            padding: 14px 24px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .signin-button:hover {
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .signin-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .signin-help-text {
+            margin-top: 24px;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .signin-help-text a {
+            color: #0948b7;
+            text-decoration: underline;
+        }
+
+        .signin-help-text a:hover {
+            color: #073a94;
+        }
+
+        /* SO Confirmation Modal */
+        .so-confirm-modal {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .so-confirm-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .so-confirm-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .so-confirm-body {
+            padding: 32px;
+        }
+
+        .so-option {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .so-option:hover {
+            border-color: #0948b7;
+            background-color: #f8f9fa;
+        }
+
+        .so-option-text {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* SO Expectation Modal */
+        .so-expectation-modal {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .so-expectation-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .so-expectation-close:hover {
+            color: #333;
+        }
+
+        .so-expectation-header {
+            padding: 24px 32px 16px;
+            background-color: #f8f9fa;
+        }
+
+        .so-expectation-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .so-expectation-body {
+            padding: 24px 32px 32px;
+        }
+
+        .so-expectation-text {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .so-expectation-note {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.8;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+
+        .so-next-steps {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .so-options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .so-option-item {
+            margin-bottom: 12px;
+        }
+
+        .so-option-link {
+            display: block;
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .so-option-link:hover {
+            border-color: #0948b7;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* ===== DATA LIBRARY STYLES ===== */
+        .data-library-page {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .dl-header {
+            background-color: white;
+            padding: 32px 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .dl-logo-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .dl-page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .dl-subtitle {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .dl-content {
+            display: flex;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .dl-sidebar {
+            width: 280px;
+            background-color: white;
+            padding: 24px;
+            border-right: 1px solid #e0e0e0;
+            min-height: calc(100vh - 120px);
+        }
+
+        .filter-group {
+            margin-bottom: 32px;
+        }
+
+        .filter-group-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .filter-checkbox {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .filter-label {
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .dl-table-section {
+            flex: 1;
+            padding: 24px;
+            overflow-x: auto;
+        }
+
+        .dataset-count {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background-color: white;
+        }
+
+        thead {
+            background-color: #f8f9fa;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            font-weight: 700;
+            color: #333;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e0e0e0;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 16px 12px;
+            color: #555;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+
+        .dataset-link {
+            color: #0948b7;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dataset-link:hover {
+            text-decoration: underline;
+        }
+
+        .access-type-cell {
+            white-space: nowrap;
+        }
+
+        .access-icons-container {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .access-icon {
+            font-size: 20px;
+            width: 24px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .auto-approval-badge {
+            font-size: 20px;
+            width: 24px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* ===== PROFILE PAGE STYLES ===== */
+        .profile-page {
+            background-color: white;
+        }
+
+        .profile-nav {
+            background-color: #0a2540;
+            display: flex;
+            align-items: center;
+            height: 60px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .profile-logo {
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-logo-circle {
+            width: 45px;
+            height: 45px;
+            background-color: #0948b7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .profile-nav-items {
+            display: flex;
+            height: 60px;
+            flex: 1;
+        }
+
+        .profile-nav-item {
+            color: #e0e0e0;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .profile-nav-item:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .profile-nav-item.active {
+            background-color: #26a69a;
+            color: white;
+        }
+
+        .profile-nav-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            padding-right: 24px;
+            gap: 20px;
+        }
+
+        .profile-nav-right a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .user-info {
+            color: white;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-email {
+            font-size: 12px;
+            color: #b0b0b0;
+        }
+
+        .profile-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 80px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .profile-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #0948b7;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+
+        .profile-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0948b7;
+        }
+
+        .ga4gh-section {
+            background-color: #f8f9fa;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .ga4gh-logo {
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+        }
+
+        .ga4gh-content {
+            flex: 1;
+        }
+
+        .ga4gh-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0948b7;
+            margin-bottom: 8px;
+        }
+
+        .ga4gh-subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .ga4gh-text {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .ga4gh-text a {
+            color: #0948b7;
+            text-decoration: underline;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0948b7;
+            margin-bottom: 24px;
+        }
+
+        .form-row {
+            margin-bottom: 32px;
+        }
+
+        .form-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0948b7;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .form-input-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .save-button {
+            background-color: #0948b7;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .save-button:hover {
+            background-color: #073a94;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .radio-input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .radio-label {
+            font-size: 15px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .info-text {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .request-button {
+            background-color: #0948b7;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .request-button:hover {
+            background-color: #073a94;
+        }
+
+        .subsection-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            margin-top: 24px;
+        }
+
+        .status-text {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .status-detail {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+
+        .library-card-text {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .so-list {
+            list-style: disc;
+            padding-left: 24px;
+            margin-top: 12px;
+        }
+
+        .so-list li {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 4px;
+        }
+
+        .terms-section {
+            margin-top: 64px;
+        }
+
+        .terms-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0948b7;
+            margin-bottom: 24px;
+        }
+
+        .terms-item {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        .terms-date {
+            font-size: 14px;
+            color: #666;
+            margin-left: 40px;
+        }
+
+        /* ===== RESEARCHER JOURNEY STYLES ===== */
+        
+        /* Progress Indicator */
+        .progress-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 32px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .progress-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+        }
+
+        .progress-dot.active {
+            background-color: #0948b7;
+        }
+
+        .progress-dot.completed {
+            background-color: #28a745;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Welcome Modal */
+        .welcome-modal {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            padding: 48px;
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0948b7;
+            margin-bottom: 24px;
+        }
+
+        .welcome-text {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .welcome-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background-color: #0948b7;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .welcome-button:hover {
+            background-color: #073a94;
+        }
+
+        /* Request Modals */
+        .request-modal {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .request-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .request-close:hover {
+            color: #333;
+        }
+
+        .request-header {
+            padding: 24px 32px 16px;
+            background-color: #f8f9fa;
+        }
+
+        .request-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .request-body {
+            padding: 24px 32px 32px;
+        }
+
+        .request-text {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .so-selector {
+            margin-bottom: 24px;
+        }
+
+        .so-checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .so-checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .so-checkbox-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .so-checkbox-input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .so-checkbox-label {
+            font-size: 15px;
+            color: #555;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .selection-counter {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .textarea-group {
+            margin-bottom: 24px;
+        }
+
+        .textarea-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .required-asterisk {
+            color: #dc3545;
+        }
+
+        .textarea-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .textarea-input:focus {
+            outline: none;
+            border-color: #0948b7;
+            box-shadow: 0 0 0 3px rgba(9, 72, 183, 0.1);
+        }
+
+        .modal-footer {
+            padding: 20px 32px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .modal-button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .cancel-button {
+            background-color: white;
+            color: #0948b7;
+            border: 2px solid #0948b7;
+        }
+
+        .cancel-button:hover {
+            background-color: #f8f9fa;
+        }
+
+        .submit-button {
+            background-color: #0948b7;
+            color: white;
+        }
+
+        .submit-button:hover {
+            background-color: #073a94;
+        }
+
+        .warning-alert {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 4px;
+        }
+
+        .warning-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .warning-text {
+            font-size: 14px;
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background-color: #e7f3ff;
+            border-left: 4px solid #0948b7;
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 4px;
+        }
+
+        .info-title {
+            font-weight: 700;
+            color: #0a2540;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .info-text-box {
+            font-size: 14px;
+            color: #0a2540;
+            line-height: 1.6;
+        }
+
+        .info-link {
+            color: #0948b7;
+            text-decoration: underline;
+        }
+
+        /* Back Button */
+        .back-button-container {
+            padding: 16px 32px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: #0948b7;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:hover {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .back-arrow {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HOMEPAGE ===== -->
+    <div id="homepage" class="page active">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="logo">
+                <div class="logo-circle">DUOS</div>
+            </div>
+            <div class="nav-left">
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">i</span>
+                    About
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">?</span>
+                    FAQs
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">≡</span>
+                    Blog
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">✉</span>
+                    Contact Us
+                </a>
+            </div>
+            <div class="nav-right">
+                <button class="sign-in-button" onclick="openSigninModal()">Sign In</button>
+                <div class="help-icon">?</div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">DUOS</h1>
+                <h2 class="hero-subtitle">Data Use Oversight System</h2>
+                <p class="hero-tagline">Access data faster.</p>
+            </div>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="cards-section">
+            <div class="card">
+                <h3 class="card-title">Signing Officials</h3>
+                <p class="card-description">Easily grant permissions to principal investigators to request data. <a href="https://duos.blog/help/preauthorize_researchers_librarycards/" target="_blank" class="inline-link">Learn more</a></p>
+                <button class="card-button-primary" onclick="openSigninModal('so')">Get Started</button>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Looking for data?</h3>
+                <p class="card-description">Find and request access to 100s of datasets through DUOS.</p>
+                <button class="card-button-primary" onclick="openSigninModal('researcher')">Get Started</button>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Data Access Committees</h3>
+                <p class="card-description">
+                    Swiftly manage data access requests and clearly track data use compliance. <a href="https://duos.blog/help/dacguide/" target="_blank" class="inline-link">Learn more</a>
+                </p>
+                <button class="card-button-primary" onclick="openSigninModal('dac')">Get Started</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DATA LIBRARY PAGE ===== -->
+    <div id="dataLibrary" class="page data-library-page">
+        <div class="dl-header">
+            <div class="dl-logo-title">
+                <div class="logo-circle">DUOS</div>
+                <h1 class="dl-page-title">DUOS Data Library</h1>
+            </div>
+            <p class="dl-subtitle">Browse and request access to datasets</p>
+        </div>
+
+        <div class="dl-content">
+            <!-- Sidebar Filters -->
+            <div class="dl-sidebar">
+                <div class="filter-group">
+                    <div class="filter-group-title">Access Type</div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="controlled" class="filter-checkbox">
+                        <label for="controlled" class="filter-label">🛡️ Controlled Access</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="auto-approval" class="filter-checkbox">
+                        <label for="auto-approval" class="filter-label">⚡ Auto-Approval</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group-title">Data Use</div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="hmb" class="filter-checkbox">
+                        <label for="hmb" class="filter-label">HMB</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="ds" class="filter-checkbox">
+                        <label for="ds" class="filter-label">DS</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group-title">Data Access Committee (DACs)</div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="dac0001" class="filter-checkbox">
+                        <label for="dac0001" class="filter-label">DAC 0001</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="dac0002" class="filter-checkbox">
+                        <label for="dac0002" class="filter-label">DAC 0002</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="dl-table-section">
+                <div class="dataset-count">173 Dataset</div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>DATASET NAME</th>
+                            <th>STUDY NAME</th>
+                            <th>DUOS ID</th>
+                            <th>ACCESS TYPE</th>
+                            <th>DATA TYPE</th>
+                            <th>PARTICIPANT COUNT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="#" class="dataset-link">ANVIL_ccdg_asc_ndd_daly_ta...</a></td>
+                            <td>Autism Sequencin...</td>
+                            <td>DUOS-000719</td>
+                            <td class="access-type-cell">
+                                <div class="access-icons-container">
+                                    <span class="access-icon">🛡️</span>
+                                    <span class="auto-approval-badge">⚡</span>
+                                </div>
+                            </td>
+                            <td>Raw Sequencing data</td>
+                            <td>2824</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="dataset-link">ANVIL_ccdg_asc_ndd_daly_ta...</a></td>
+                            <td>Autism Sequencin...</td>
+                            <td>DUOS-000713</td>
+                            <td class="access-type-cell">
+                                <div class="access-icons-container">
+                                    <span class="access-icon">🛡️</span>
+                                    <span class="auto-approval-badge"></span>
+                                </div>
+                            </td>
+                            <td>Raw Sequencing data</td>
+                            <td>2111</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="dataset-link">consent group 1 disease speci...</a></td>
+                            <td>2023-11-17 study</td>
+                            <td>DUOS-000688</td>
+                            <td class="access-type-cell">
+                                <div class="access-icons-container">
+                                    <span class="access-icon">🛡️</span>
+                                    <span class="auto-approval-badge">⚡</span>
+                                </div>
+                            </td>
+                            <td>Whole Genome (WGS)</td>
+                            <td>123</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="dataset-link">Study Testing 11-17-23</a></td>
+                            <td>Study Testing 11-17-...</td>
+                            <td>DUOS-000689</td>
+                            <td class="access-type-cell">
+                                <div class="access-icons-container">
+                                    <span class="access-icon">🛡️</span>
+                                    <span class="auto-approval-badge"></span>
+                                </div>
+                            </td>
+                            <td>CITE-seq</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="dataset-link">ANVIL_ccdg_broad_ai_ibd_da...</a></td>
+                            <td>Center for Commo...</td>
+                            <td>DUOS-000789</td>
+                            <td class="access-type-cell">
+                                <div class="access-icons-container">
+                                    <span class="access-icon">🛡️</span>
+                                    <span class="auto-approval-badge">⚡</span>
+                                </div>
+                            </td>
+                            <td>Raw Sequencing data</td>
+                            <td>55</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PROFILE PAGE ===== -->
+    <div id="profilePage" class="page profile-page">
+        <nav class="profile-nav">
+            <div class="profile-logo">
+                <div class="profile-logo-circle">DUOS</div>
+            </div>
+            <div class="profile-nav-items">
+                <a href="#" class="profile-nav-item active">Admin Console</a>
+                <a href="#" class="profile-nav-item">SO Console</a>
+                <a href="#" class="profile-nav-item">DAC Chair Console</a>
+                <a href="#" class="profile-nav-item">DAC Member Console</a>
+                <a href="#" class="profile-nav-item">Researcher Console</a>
+            </div>
+            <div class="profile-nav-right">
+                <a href="#">Help</a>
+                <a href="#">Contact Us</a>
+                <div class="user-info">
+                    <div class="user-name">Jane Doe</div>
+                    <div class="user-email">janedoe@broadinstitute.org</div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="profile-content">
+            <div class="profile-header">
+                <div class="profile-icon">📋</div>
+                <h1 class="profile-title">Your Profile</h1>
+            </div>
+
+            <!-- GA4GH Section -->
+            <div class="ga4gh-section">
+                <svg class="ga4gh-logo" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="#0948b7"/>
+                    <text x="50" y="60" font-size="40" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">GA</text>
+                </svg>
+                <div class="ga4gh-content">
+                    <div class="ga4gh-title">Global Alliance</div>
+                    <div class="ga4gh-subtitle">for Genomics & Health<br>Collaborate. Innovate. Accelerate.</div>
+                    <div class="ga4gh-text">
+                        DUOS user profile components are based off of the GA4GH Passports specification Visa types. More information on the GA4GH Passports standard can be found <a href="#">here</a>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Name Section -->
+            <div class="section">
+                <div class="form-row">
+                    <label class="form-label">Full Name</label>
+                    <div class="form-input-group">
+                        <input type="text" class="form-input" value="Jane Doe">
+                        <button class="save-button">Save</button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <input type="text" class="form-input" value="janedoe@broadinstitute.org" readonly>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label" style="font-size: 15px; color: #333; font-weight: 600;">Send me email notifications</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="notifications" id="yes" class="radio-input" checked>
+                            <label for="yes" class="radio-label">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="notifications" id="no" class="radio-input">
+                            <label for="no" class="radio-label">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Affiliation & Role Section -->
+            <div class="section">
+                <h2 class="section-title">Affiliation & Role</h2>
+                
+                <div class="subsection-title">Institution</div>
+                <div class="info-text">The Broad Institute of MIT and Harvard</div>
+
+                <div class="subsection-title">Role</div>
+                <div class="info-text">Member, Chairperson, Admin, Researcher, SigningOfficial</div>
+
+                <button class="request-button">Request a New Role</button>
+            </div>
+
+            <!-- Researcher Status Section -->
+            <div class="section">
+                <h2 class="section-title">Researcher Status</h2>
+
+                <div class="subsection-title">RAS Account</div>
+                <div class="library-card-text">
+                    A <a href="#">RAS Account</a> is required to submit a Data Access Request (DAR).
+                </div>
+                <div class="status-text">janedoe@broadinstitute.org ⓘ</div>
+                <div class="status-detail">Your NIH authentication will expire in 8 days</div>
+
+                <div class="subsection-title">Library Card issued to you</div>
+                <div class="library-card-text">
+                    A Library Card is a Signing Official's pre-authorization of a researcher to submit Data Access Requests (DARs) in DUOS. A valid Library Card is required to initiate a DAR.
+                </div>
+                <div class="status-text">No Library Card Found</div>
+                <div class="library-card-text">
+                    You must have a Library Card to submit a data access request. To obtain one, your institutional Signing Official must register in DUOS, request and receive Signing Official permissions, and issue you a Library Card.
+                </div>
+            </div>
+
+            <!-- Accepted Terms & Policies Section -->
+            <div class="terms-section">
+                <h2 class="terms-title">Accepted Terms & Policies</h2>
+                <div class="terms-item">DUOS/Terra Terms of Service</div>
+                <div class="terms-item">
+                    NIH_Library_Card_Agreement_11.17.22_version.pdf
+                    <div class="terms-date">attested on:10/02/2025</div>
+                </div>
+                <div class="terms-item">
+                    Library_Card_Agreement_2023_ApplicationVersion
+                    <div class="terms-date">attested on:10/02/2025</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODALS ===== -->
+    
+    <!-- Sign-in Modal -->
+    <div class="modal-overlay" id="signinModal">
+        <div class="signin-modal">
+            <div class="signin-logo">
+                <div class="signin-logo-text">DUOS</div>
+            </div>
+            
+            <button class="signin-button" onclick="signInWithGoogle()">
+                <svg class="signin-icon" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Sign in with Google
+            </button>
+
+            <p class="signin-help-text">
+                Sign in with your institutional email address. If your institution does not use Gmail, get help <a href="https://duos.blog/link_institutional_email_to_gmail/" target="_blank">here</a>.
+            </p>
+        </div>
+    </div>
+
+    <!-- SO Confirmation Modal -->
+    <div class="modal-overlay" id="soConfirmModal">
+        <div class="so-confirm-modal">
+            <div class="so-confirm-header">
+                <h2 class="so-confirm-title">Are you an institutional signing official (SO)?</h2>
+            </div>
+            <div class="so-confirm-body">
+                <div class="so-option" onclick="showSoExpectation()">
+                    <p class="so-option-text">Yes, please initiate assigning me the SO role within DUOS.</p>
+                </div>
+                <div class="so-option" onclick="logoutAndReturn()">
+                    <p class="so-option-text">No, take me back to the homepage and log me out.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SO Expectation Modal -->
+    <div class="modal-overlay" id="soExpectationModal">
+        <div class="so-expectation-modal">
+            <button class="so-expectation-close" onclick="closeSoExpectation()">&times;</button>
+            <div class="so-expectation-header">
+                <h2 class="so-expectation-title">What to expect</h2>
+            </div>
+            <div class="so-expectation-body">
+                <p class="so-expectation-text">
+                    Once you have completed your profile, the DUOS team will reach out to you to verify your identity. Once you are approved, you will then be able to view your Signing Official Console where you can issue Library Card Agreements to researchers from your institution.
+                </p>
+                <p class="so-expectation-note">
+                    Please note, this agreement is non-negotiable.
+                </p>
+                <p class="so-next-steps">
+                    In the meantime, you can:
+                </p>
+                <ul class="so-options-list">
+                    <li class="so-option-item">
+                        <a href="#" class="so-option-link" onclick="showProfile(); return false;">Go to my profile</a>
+                    </li>
+                    <li class="so-option-item">
+                        <a href="https://duos.blog/help/preauthorize_researchers_librarycards/" target="_blank" class="so-option-link">Check out the DUOS blog to learn more about library cards</a>
+                    </li>
+                    <li class="so-option-item">
+                        <a href="#" class="so-option-link" onclick="closeSoExpectation(); return false;">Explore the DUOS data library</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== RESEARCHER JOURNEY MODALS ===== -->
+    
+    <!-- Researcher Confirmation Modal -->
+    <div class="modal-overlay" id="researcherConfirmModal">
+        <div class="so-confirm-modal">
+            <div class="so-confirm-header">
+                <h2 class="so-confirm-title">Are you a researcher?</h2>
+            </div>
+            <div class="so-confirm-body">
+                <div class="so-option" onclick="showResearcherOptions()">
+                    <p class="so-option-text">Yes</p>
+                </div>
+                <div class="so-option" onclick="logoutAndReturn()">
+                    <p class="so-option-text">No, take me back to the homepage and log me out.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Researcher Options Modal ("I am a researcher looking to...") -->
+    <div class="modal-overlay" id="researcherOptionsModal">
+        <div class="so-confirm-modal">
+            <div class="progress-indicator">
+                <div class="progress-dots">
+                    <div class="progress-dot completed"></div>
+                    <div class="progress-dot active"></div>
+                    <div class="progress-dot"></div>
+                </div>
+                <div class="progress-text">Step 2 of 3</div>
+            </div>
+            <div class="so-confirm-header">
+                <h2 class="so-confirm-title">I am a researcher looking to...</h2>
+            </div>
+            <div class="so-confirm-body">
+                <div class="so-option" onclick="startSearchFlow()">
+                    <p class="so-option-text">search for datasets in the DUOS data library and apply for access.</p>
+                </div>
+                <div class="so-option" onclick="startSubmitFlow()">
+                    <p class="so-option-text">submit data to DUOS.</p>
+                </div>
+                <div class="so-option" onclick="startBothFlow()">
+                    <p class="so-option-text">do all of the above.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Library Card Question Modal -->
+    <div class="modal-overlay" id="libraryCardQuestionModal">
+        <div class="so-confirm-modal">
+            <div class="back-button-container">
+                <button class="back-button" onclick="goBackToResearcherOptions()">
+                    <span class="back-arrow">←</span>
+                    <span>Back</span>
+                </button>
+            </div>
+            <div class="progress-indicator">
+                <div class="progress-dots">
+                    <div class="progress-dot completed"></div>
+                    <div class="progress-dot completed"></div>
+                    <div class="progress-dot active"></div>
+                </div>
+                <div class="progress-text" id="libCardProgressText">Step 3 of 3</div>
+            </div>
+            <div class="so-confirm-header">
+                <h2 class="so-confirm-title" style="font-size: 20px;">Library Card Required</h2>
+            </div>
+            <div class="so-confirm-body">
+                <p class="so-option-text" style="margin-bottom: 16px; text-align: left;">
+                    You can search for data now without any special privileges. However, to submit a data access request (DAR), your institution's signing official (SO) needs to issue you a library card on DUOS.
+                </p>
+                <p class="so-option-text" style="margin-bottom: 24px; text-align: left;">
+                    Do you want to request a library card now? You can also request one within your user profile at any time.
+                </p>
+                <div class="so-option" onclick="showLibraryCardRequest()">
+                    <p class="so-option-text">Yes, request a library card from my institution's SO.</p>
+                </div>
+                <div class="so-option" onclick="handleLibraryCardNo()">
+                    <p class="so-option-text">Not right now.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Submitter Question Modal -->
+    <div class="modal-overlay" id="dataSubmitterQuestionModal">
+        <div class="so-confirm-modal">
+            <div class="back-button-container">
+                <button class="back-button" onclick="goBackToResearcherOptions()">
+                    <span class="back-arrow">←</span>
+                    <span>Back</span>
+                </button>
+            </div>
+            <div class="progress-indicator">
+                <div class="progress-dots">
+                    <div class="progress-dot completed"></div>
+                    <div class="progress-dot completed"></div>
+                    <div class="progress-dot active"></div>
+                </div>
+                <div class="progress-text" id="dataSubmitterProgressText">Step 3 of 3</div>
+            </div>
+            <div class="so-confirm-header">
+                <h2 class="so-confirm-title" style="font-size: 20px;">Data Submitter Privileges</h2>
+            </div>
+            <div class="so-confirm-body">
+                <p class="so-option-text" style="margin-bottom: 24px; text-align: left;">
+                    Would you like to request data submitter privileges now? You can do this at any time within your user profile.
+                </p>
+                <div class="so-option" onclick="showDataSubmitterRequest()">
+                    <p class="so-option-text">Yes, I want to request data submitter privileges now.</p>
+                </div>
+                <div class="so-option" onclick="handleDataSubmitterNo()">
+                    <p class="so-option-text">Not right now.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Screen Modal -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="welcome-modal">
+            <h2 class="welcome-title">Welcome to DUOS!</h2>
+            <button class="welcome-button" onclick="closeAllModals()">Take me to the data library</button>
+        </div>
+    </div>
+
+    <!-- Request Library Card Modal -->
+    <div class="modal-overlay" id="requestLibraryCardModal">
+        <div class="request-modal">
+            <button class="request-close" onclick="closeRequestLibraryCard()">&times;</button>
+            <div class="request-header">
+                <h2 class="request-title">Request a Library Card</h2>
+            </div>
+            <div class="request-body">
+                <p class="request-text">
+                    Select one or more Signing Officials from your institution below. The selected SO(s) will be notified of your request and can issue you a Library Card from their SO Console. Only one SO needs to issue the card.
+                </p>
+
+                <div class="so-selector">
+                    <div class="so-checkbox-group">
+                        <div class="so-checkbox-item">
+                            <input type="checkbox" id="so1" class="so-checkbox-input" onchange="updateSOCounter()">
+                            <label for="so1" class="so-checkbox-label">⚡ Andrea Saltzman</label>
+                        </div>
+                        <div class="so-checkbox-item">
+                            <input type="checkbox" id="so2" class="so-checkbox-input" onchange="updateSOCounter()">
+                            <label for="so2" class="so-checkbox-label">⚡ Gregory Rushton</label>
+                        </div>
+                        <div class="so-checkbox-item">
+                            <input type="checkbox" id="so3" class="so-checkbox-input" onchange="updateSOCounter()">
+                            <label for="so3" class="so-checkbox-label">⚡ Stacey Donnelly</label>
+                        </div>
+                        <div class="so-checkbox-item">
+                            <input type="checkbox" id="so4" class="so-checkbox-input" onchange="updateSOCounter()">
+                            <label for="so4" class="so-checkbox-label">⚡ Jonathan Lawson</label>
+                        </div>
+                    </div>
+                    <div class="selection-counter" id="soCounter">0 Signing Officials selected</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button cancel-button" onclick="closeRequestLibraryCard()">Cancel</button>
+                <button class="modal-button submit-button" onclick="submitLibraryCardRequest()">Send Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- No SO Available Modal -->
+    <div class="modal-overlay" id="noSOModal">
+        <div class="request-modal">
+            <button class="request-close" onclick="closeNoSOModal()">&times;</button>
+            <div class="request-header">
+                <h2 class="request-title">Request a Library Card</h2>
+            </div>
+            <div class="request-body">
+                <div class="warning-alert">
+                    <div class="warning-title">⚠ No Signing Officials Available</div>
+                    <div class="warning-text">
+                        There are currently no Signing Officials registered for your institution in DUOS. You cannot request a Library Card at this time.
+                    </div>
+                </div>
+
+                <p class="request-text">
+                    A Signing Official from your institution must register in DUOS before you can request a Library Card.
+                </p>
+
+                <div class="info-box">
+                    <div class="info-title">What can you do?</div>
+                    <div class="info-text-box">
+                        Contact your institution's research administration office to inquire about Signing Officials who can register in DUOS. Information about Signing Officials on DUOS can be found <a href="https://duos.blog/help/preauthorize_researchers_librarycards/" target="_blank" class="info-link">here</a>.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button submit-button" onclick="closeNoSOModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Data Submitter Modal -->
+    <div class="modal-overlay" id="requestDataSubmitterModal">
+        <div class="request-modal">
+            <button class="request-close" onclick="closeDataSubmitterRequest()">&times;</button>
+            <div class="request-header">
+                <h2 class="request-title">Request Data Submitter Privileges</h2>
+            </div>
+            <div class="request-body">
+                <p class="request-text">
+                    Select one or more Signing Officials from your institution to request Data Submitter privileges. The selected SO(s) will be notified of your request and can approve it from their SO Console. Only one SO needs to approve the request.
+                </p>
+
+                <div class="so-selector">
+                    <div class="so-checkbox-group">
+                        <div class="so-checkbox-item">
+                            <input type="checkbox" id="ds-so1" class="so-checkbox-input" onchange="updateDSCounter()">
+                            <label for="ds-so1" class="so-checkbox-label">⚡ Andrea Saltzman</label>
+                        </div>
+                        <div class="so-checkbox-item">
+                            <input type="checkbox" id="ds-so2" class="so-checkbox-input" onchange="updateDSCounter()">
+                            <label for="ds-so2" class="so-checkbox-label">⚡ Gregory Rushton</label>
+                        </div>
+                        <div class="so-checkbox-item">
+                            <input type="checkbox" id="ds-so3" class="so-checkbox-input" onchange="updateDSCounter()">
+                            <label for="ds-so3" class="so-checkbox-label">⚡ Stacey Donnelly</label>
+                        </div>
+                        <div class="so-checkbox-item">
+                            <input type="checkbox" id="ds-so4" class="so-checkbox-input" onchange="updateDSCounter()">
+                            <label for="ds-so4" class="so-checkbox-label">⚡ Jonathan Lawson</label>
+                        </div>
+                    </div>
+                    <div class="selection-counter" id="dsCounter">0 Signing Officials selected</div>
+                </div>
+
+                <div class="textarea-group">
+                    <label class="textarea-label">Why do you need Data Submitter privileges? <span class="required-asterisk">*</span></label>
+                    <textarea class="textarea-input" placeholder="Please explain why you need Data Submitter privileges..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button cancel-button" onclick="closeDataSubmitterRequest()">Cancel</button>
+                <button class="modal-button submit-button" onclick="submitDataSubmitterRequest()">Send Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DAC JOURNEY MODALS ===== -->
+    
+    <!-- DAC Confirmation Modal -->
+    <div class="modal-overlay" id="dacConfirmModal">
+        <div class="so-confirm-modal">
+            <div class="so-confirm-header">
+                <h2 class="so-confirm-title">Are you a member of a data access committee (DAC)?</h2>
+            </div>
+            <div class="so-confirm-body">
+                <div class="so-option" onclick="showDACMemberExpectation()">
+                    <p class="so-option-text">Yes, please initiate assigning me the DAC Member role within DUOS.</p>
+                </div>
+                <div class="so-option" onclick="showDACChairExpectation()">
+                    <p class="so-option-text">Yes, I am the chair of my DAC. Please initiate assigning me the DAC Chair role within DUOS.</p>
+                </div>
+                <div class="so-option" onclick="logoutAndReturn()">
+                    <p class="so-option-text">No, take me back to the homepage and log me out.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAC Member Expectation Modal -->
+    <div class="modal-overlay" id="dacMemberExpectationModal">
+        <div class="so-expectation-modal">
+            <button class="so-expectation-close" onclick="closeDACExpectation()">&times;</button>
+            <div class="so-expectation-header">
+                <h2 class="so-expectation-title">What to expect</h2>
+            </div>
+            <div class="so-expectation-body">
+                <p class="so-expectation-text">
+                    Once you have completed your profile, the DUOS team will reach out to you to verify your identity. Once you are approved, you will then be able to view your DAC Member console where you can review and vote on approval for data access requests (DARs) from researchers for datasets under your care.
+                </p>
+                <p class="so-next-steps">
+                    In the meantime, you can:
+                </p>
+                <ul class="so-options-list">
+                    <li class="so-option-item">
+                        <a href="#" class="so-option-link" onclick="showProfile(); return false;">Go to my profile</a>
+                    </li>
+                    <li class="so-option-item">
+                        <a href="https://duos.blog/help/dacguide/" target="_blank" class="so-option-link">Check out the DUOS blog to learn more about DACs on DUOS</a>
+                    </li>
+                    <li class="so-option-item">
+                        <a href="#" class="so-option-link" onclick="closeDACExpectation(); return false;">Explore the DUOS data library</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAC Chair Expectation Modal -->
+    <div class="modal-overlay" id="dacChairExpectationModal">
+        <div class="so-expectation-modal">
+            <button class="so-expectation-close" onclick="closeDACExpectation()">&times;</button>
+            <div class="so-expectation-header">
+                <h2 class="so-expectation-title">What to expect</h2>
+            </div>
+            <div class="so-expectation-body">
+                <p class="so-expectation-text">
+                    Once you have completed your profile, the DUOS team will reach out to you to verify your identity. Once you are approved, you will then be able to view your DAC Chair console where you can review and vote on approval for data access requests (DARs) from researchers for datasets under your care.
+                </p>
+                <p class="so-next-steps">
+                    In the meantime, you can:
+                </p>
+                <ul class="so-options-list">
+                    <li class="so-option-item">
+                        <a href="#" class="so-option-link" onclick="showProfile(); return false;">Go to my profile</a>
+                    </li>
+                    <li class="so-option-item">
+                        <a href="https://duos.blog/help/dacguide/" target="_blank" class="so-option-link">Check out the DUOS blog to learn more about DACs on DUOS</a>
+                    </li>
+                    <li class="so-option-item">
+                        <a href="#" class="so-option-link" onclick="closeDACExpectation(); return false;">Explore the DUOS data library</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page navigation functions
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show requested page
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function showProfile() {
+            closeAllModals();
+            showPage('profilePage');
+        }
+
+        function showDataLibrary() {
+            showPage('dataLibrary');
+        }
+
+        function showHomepage() {
+            showPage('homepage');
+        }
+
+        // Track current user type
+        let currentUserType = 'so'; // 'so', 'researcher', or 'dac'
+        let researcherPath = ''; // 'search', 'submit', or 'both'
+        let flowStep = 0;
+
+        // Modal functions
+        function openSigninModal(userType) {
+            currentUserType = userType || 'so';
+            document.getElementById('signinModal').classList.add('active');
+        }
+
+        function closeSigninModal() {
+            document.getElementById('signinModal').classList.remove('active');
+        }
+
+        function showSoConfirmation() {
+            closeSigninModal();
+            document.getElementById('soConfirmModal').classList.add('active');
+        }
+
+        function showSoExpectation() {
+            document.getElementById('soConfirmModal').classList.remove('active');
+            document.getElementById('soExpectationModal').classList.add('active');
+        }
+
+        function closeSoExpectation() {
+            document.getElementById('soExpectationModal').classList.remove('active');
+        }
+
+        function closeAllModals() {
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.classList.remove('active');
+            });
+        }
+
+        function logoutAndReturn() {
+            closeAllModals();
+            showHomepage();
+        }
+
+        // Sign in flow
+        function signInWithGoogle() {
+            closeSigninModal();
+            showDataLibrary();
+            // Show appropriate confirmation modal based on user type
+            setTimeout(() => {
+                if (currentUserType === 'so') {
+                    document.getElementById('soConfirmModal').classList.add('active');
+                } else if (currentUserType === 'researcher') {
+                    document.getElementById('researcherConfirmModal').classList.add('active');
+                } else if (currentUserType === 'dac') {
+                    document.getElementById('dacConfirmModal').classList.add('active');
+                }
+            }, 300);
+        }
+
+        // ===== RESEARCHER JOURNEY FUNCTIONS =====
+        
+        function showResearcherOptions() {
+            document.getElementById('researcherConfirmModal').classList.remove('active');
+            document.getElementById('researcherOptionsModal').classList.add('active');
+        }
+
+        function startSearchFlow() {
+            researcherPath = 'search';
+            document.getElementById('researcherOptionsModal').classList.remove('active');
+            document.getElementById('libraryCardQuestionModal').classList.add('active');
+            document.getElementById('libCardProgressText').textContent = 'Step 3 of 3';
+        }
+
+        function startSubmitFlow() {
+            researcherPath = 'submit';
+            document.getElementById('researcherOptionsModal').classList.remove('active');
+            document.getElementById('dataSubmitterQuestionModal').classList.add('active');
+            document.getElementById('dataSubmitterProgressText').textContent = 'Step 3 of 3';
+        }
+
+        function startBothFlow() {
+            researcherPath = 'both';
+            document.getElementById('researcherOptionsModal').classList.remove('active');
+            document.getElementById('libraryCardQuestionModal').classList.add('active');
+            // For "both" flow, we need 4 steps total
+            document.getElementById('libCardProgressText').textContent = 'Step 3 of 4';
+        }
+
+        function showLibraryCardRequest() {
+            document.getElementById('libraryCardQuestionModal').classList.remove('active');
+            // Check if SOs are available (simulated - in real app would check actual data)
+            const hasAvailableSOs = true; // Change to false to test no SO scenario
+            
+            if (hasAvailableSOs) {
+                document.getElementById('requestLibraryCardModal').classList.add('active');
+            } else {
+                document.getElementById('noSOModal').classList.add('active');
+            }
+        }
+
+        function closeRequestLibraryCard() {
+            document.getElementById('requestLibraryCardModal').classList.remove('active');
+            // Return to previous modal
+            document.getElementById('libraryCardQuestionModal').classList.add('active');
+        }
+
+        function submitLibraryCardRequest() {
+            document.getElementById('requestLibraryCardModal').classList.remove('active');
+            
+            // If "both" path, go to data submitter question next
+            if (researcherPath === 'both') {
+                document.getElementById('dataSubmitterQuestionModal').classList.add('active');
+                document.getElementById('dataSubmitterProgressText').textContent = 'Step 4 of 4';
+            } else {
+                // Otherwise go to welcome screen
+                showWelcomeScreen();
+            }
+        }
+
+        function closeNoSOModal() {
+            document.getElementById('noSOModal').classList.remove('active');
+            // Go to welcome screen even if no SO available
+            showWelcomeScreen();
+        }
+
+        function showDataSubmitterRequest() {
+            document.getElementById('dataSubmitterQuestionModal').classList.remove('active');
+            document.getElementById('requestDataSubmitterModal').classList.add('active');
+        }
+
+        function closeDataSubmitterRequest() {
+            document.getElementById('requestDataSubmitterModal').classList.remove('active');
+            // Return to previous modal
+            document.getElementById('dataSubmitterQuestionModal').classList.add('active');
+        }
+
+        function submitDataSubmitterRequest() {
+            document.getElementById('requestDataSubmitterModal').classList.remove('active');
+            showWelcomeScreen();
+        }
+
+        function handleDataSubmitterNo() {
+            document.getElementById('dataSubmitterQuestionModal').classList.remove('active');
+            
+            // If "both" path and they said no to data submitter, still show welcome
+            if (researcherPath === 'both') {
+                showWelcomeScreen();
+            } else {
+                // For pure submit flow, show welcome
+                showWelcomeScreen();
+            }
+        }
+
+        function showWelcomeScreen() {
+            closeAllModals();
+            document.getElementById('welcomeModal').classList.add('active');
+        }
+
+        function handleLibraryCardNo() {
+            document.getElementById('libraryCardQuestionModal').classList.remove('active');
+            
+            // If "both" path, go to data submitter question instead of welcome
+            if (researcherPath === 'both') {
+                document.getElementById('dataSubmitterQuestionModal').classList.add('active');
+                document.getElementById('dataSubmitterProgressText').textContent = 'Step 4 of 4';
+            } else {
+                // For search-only path, show welcome
+                showWelcomeScreen();
+            }
+        }
+
+        function goBackToResearcherOptions() {
+            // Close whichever modal is currently open
+            document.getElementById('libraryCardQuestionModal').classList.remove('active');
+            document.getElementById('dataSubmitterQuestionModal').classList.remove('active');
+            
+            // Reset the researcher path
+            researcherPath = '';
+            
+            // Show the researcher options modal
+            document.getElementById('researcherOptionsModal').classList.add('active');
+        }
+
+        // ===== DAC JOURNEY FUNCTIONS =====
+        
+        function showDACMemberExpectation() {
+            document.getElementById('dacConfirmModal').classList.remove('active');
+            document.getElementById('dacMemberExpectationModal').classList.add('active');
+        }
+
+        function showDACChairExpectation() {
+            document.getElementById('dacConfirmModal').classList.remove('active');
+            document.getElementById('dacChairExpectationModal').classList.add('active');
+        }
+
+        function closeDACExpectation() {
+            document.getElementById('dacMemberExpectationModal').classList.remove('active');
+            document.getElementById('dacChairExpectationModal').classList.remove('active');
+        }
+
+        function updateSOCounter() {
+            const checkboxes = document.querySelectorAll('#requestLibraryCardModal .so-checkbox-input');
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+            document.getElementById('soCounter').textContent = `${checked} Signing Official${checked !== 1 ? 's' : ''} selected`;
+        }
+
+        function updateDSCounter() {
+            const checkboxes = document.querySelectorAll('#requestDataSubmitterModal .so-checkbox-input');
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+            document.getElementById('dsCounter').textContent = `${checked} Signing Official${checked !== 1 ? 's' : ''} selected`;
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
