@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUOS Study Page - B2C Redesign</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background-color: #0a2540;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            height: 60px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: #0948b7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .nav-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 20px;
+        }
+
+        .nav-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .user-info {
+            color: white;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-email {
+            font-size: 12px;
+            color: #b0b0b0;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 40px;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #0948b7;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
+        }
+
+        /* Study Header */
+        .study-header {
+            background: white;
+            padding: 32px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .study-id {
+            color: #0948b7;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .study-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0a2540;
+            margin-bottom: 16px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-auto {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .badge-open {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .badge-updated {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+
+        /* Quick Stats Banner */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0948b7;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Two Column Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        /* Card Styling */
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0a2540;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title-icon {
+            font-size: 24px;
+        }
+
+        /* Study Description */
+        .description {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .metadata-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .metadata-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .metadata-value {
+            font-size: 15px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* DARs Over Time Chart */
+        .chart-container {
+            height: 280px;
+            background: white;
+            border-radius: 4px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 220px;
+            gap: 12px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0;
+        }
+
+        .chart-bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+        }
+
+        .chart-bar {
+            width: 100%;
+            max-width: 60px;
+            background: linear-gradient(to top, #0948b7, #26a69a);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .chart-bar:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 8px rgba(9, 72, 183, 0.3);
+        }
+
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(10, 37, 64, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .chart-bar:hover::after {
+            opacity: 1;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 11px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 11px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* Reviews Section */
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .rating-score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .rating-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #0a2540;
+        }
+
+        .stars {
+            font-size: 24px;
+            color: #ffa726;
+        }
+
+        .rating-count {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .rating-bars {
+            flex: 1;
+        }
+
+        .rating-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .rating-bar-label {
+            font-size: 13px;
+            color: #666;
+            width: 60px;
+        }
+
+        .rating-bar-bg {
+            flex: 1;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .rating-bar-fill {
+            height: 100%;
+            background-color: #ffa726;
+            border-radius: 4px;
+        }
+
+        .rating-bar-count {
+            font-size: 13px;
+            color: #666;
+            width: 40px;
+            text-align: right;
+        }
+
+        /* Review Card */
+        .review {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 20px 0;
+        }
+
+        .review:last-child {
+            border-bottom: none;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0948b7, #26a69a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .review-date {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .review-stars {
+            color: #ffa726;
+            font-size: 16px;
+        }
+
+        .review-text {
+            color: #555;
+            line-height: 1.6;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .review-helpful {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .helpful-button {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .helpful-button:hover {
+            border-color: #0948b7;
+            color: #0948b7;
+        }
+
+        /* Datasets Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            font-weight: 700;
+            color: #333;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        td {
+            padding: 16px 12px;
+            color: #555;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .dataset-link {
+            color: #0948b7;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dataset-link:hover {
+            text-decoration: underline;
+        }
+
+        .checkbox-input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* Study Assets Grid */
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .asset-item {
+            padding: 16px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .asset-item:hover {
+            border-color: #0948b7;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(9, 72, 183, 0.1);
+        }
+
+        .asset-icon {
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .asset-info {
+            flex: 1;
+        }
+
+        .asset-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .asset-count {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Publications */
+        .publication {
+            padding: 16px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid #0948b7;
+        }
+
+        .publication-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .publication-meta {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .publication-link {
+            color: #0948b7;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .publication-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Recommendations */
+        .recommendation-card {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .recommendation-card:hover {
+            border-color: #0948b7;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(9, 72, 183, 0.1);
+        }
+
+        .rec-title {
+            font-weight: 600;
+            color: #0948b7;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .rec-meta {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .rec-match {
+            font-size: 12px;
+            color: #26a69a;
+            font-weight: 600;
+        }
+
+        /* Sidebar Stats */
+        .sidebar-stat {
+            padding: 20px;
+            background: linear-gradient(135deg, #0948b7 0%, #26a69a 100%);
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .sidebar-stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Action Button */
+        .action-button {
+            width: 100%;
+            padding: 16px;
+            background-color: #0948b7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s;
+        }
+
+        .action-button:hover {
+            background-color: #073a94;
+        }
+
+        .secondary-button {
+            width: 100%;
+            padding: 12px;
+            background-color: white;
+            color: #0948b7;
+            border: 2px solid #0948b7;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .secondary-button:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="logo">DUOS</div>
+        <div class="nav-title">Researcher Console</div>
+        <div class="nav-right">
+            <a href="#" class="nav-link">Help</a>
+            <a href="#" class="nav-link">Contact Us</a>
+            <div class="user-info">
+                <div class="user-name">Sofia Labrecque Nieves</div>
+                <div class="user-email">slabrecq@broadinstitute.org</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <a href="#" class="back-button">← Back to library</a>
+
+        <!-- Study Header -->
+        <div class="study-header">
+            <div class="study-id">DUOS-S3</div>
+            <h1 class="study-title">Glioma_Tcells_WucherpfennigSuvaRegev_scRNASeq</h1>
+            
+            <div class="badges">
+                <span class="badge badge-auto">⚡ Auto-Approval Available</span>
+                <span class="badge badge-open">🔓 Open Access Datasets</span>
+                <span class="badge badge-updated">🔄 Recently Updated</span>
+            </div>
+
+            <!-- Quick Stats Banner -->
+            <div class="quick-stats">
+                <div class="stat-item">
+                    <div class="stat-number">247</div>
+                    <div class="stat-label">Total DARs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">89%</div>
+                    <div class="stat-label">Approval Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.2</div>
+                    <div class="stat-label">Avg Days to Approval</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.6★</div>
+                    <div class="stat-label">User Rating</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="content-grid">
+            <!-- Left Column -->
+            <div>
+                <!-- Study Description -->
+                <div class="card">
+                    <h2 class="card-title"><span class="card-title-icon">📄</span> Study Description</h2>
+                    <p class="description">
+                        We profiled and characterized the types, programs, and states of glioma-infiltrating T cells isolated from fresh tumor samples using full-length or 5â€™ and single-cell RNA-seq (scRNA-seq) in 31 adult patients with either IDH-wildtype glioblastoma (GBM) or IDH-mutant glioma (IDH-G). We use this tumor T cell atlas to identify new pathways regulating T cell function in the tumor microenvironment across GBM and IDH-G cases. We focus on subsets of cytotoxic glioma-infiltrating T cells that co-express several NK cell genes (termed glioma-expanded T cells in tumors expressing NK genes [GETK]). Analysis of glioma-expanded T cells in tumors expressing NK genes, as a potential therapeutic target, as it is a cell surface molecule expressed by both CD8 and CD4 T cell subsets, and a larger fraction of T cells express CD161 than the PD-1 protein. Additionally, CLEC2D, the ligand for CD161, is a surface molecule expressed by myeloid cells and malignant cells, suggesting a ligand-receptor pathway for immunotherapy. Accordingly, functional experiments where KLRB1 was inactivated in primary human T cells using CRISPR/Cas9 showed that CD161 inhibits the anti-tumor function of T cells in vitro and in vivo. Inhibition of ligand binding with a CD161 blocking mAb showed similar anti-tumor efficacy in vitro. Generalizing our observations, we find that KLRB1, and the gene expression signature of a KLRB1 expressing T cell, is shared across diverse cancer types. Our comprehensive atlas of T cell expression programs across the major classes of diffuse gliomas thus identifies the CD161-CLEC2D pathway as a potential target for immunotherapy of diffuse gliomas and other human cancers.
+                    </p>
+
+                    <div class="metadata-grid">
+                        <div class="metadata-item">
+                            <div class="metadata-label">Participants</div>
+                            <div class="metadata-value">31</div>
+                        </div>
+                        <div class="metadata-item">
+                            <div class="metadata-label">Phenotype</div>
+                            <div class="metadata-value">High Grade Glioma</div>
+                        </div>
+                        <div class="metadata-item">
+                            <div class="metadata-label">Species</div>
+                            <div class="metadata-value">Human</div>
+                        </div>
+                        <div class="metadata-item">
+                            <div class="metadata-label">PI Name</div>
+                            <div class="metadata-value">Aviv Regev, Mario L. SuvÃ, Kai W. Wucherpfennig</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Study Assets -->
+                <div class="card">
+                    <h2 class="card-title"><span class="card-title-icon">📦</span> Study Assets</h2>
+                    <div class="assets-grid">
+                        <div class="asset-item">
+                            <div class="asset-icon">🧬</div>
+                            <div class="asset-info">
+                                <div class="asset-name">Datasets</div>
+                                <div class="asset-count">1 available</div>
+                            </div>
+                        </div>
+                        <div class="asset-item">
+                            <div class="asset-icon">🔬</div>
+                            <div class="asset-info">
+                                <div class="asset-name">Models</div>
+                                <div class="asset-count">2 computational models</div>
+                            </div>
+                        </div>
+                        <div class="asset-item">
+                            <div class="asset-icon">💻</div>
+                            <div class="asset-info">
+                                <div class="asset-name">Featured Workspaces</div>
+                                <div class="asset-count">1 Terra workspace</div>
+                            </div>
+                        </div>
+                        <div class="asset-item">
+                            <div class="asset-icon">📚</div>
+                            <div class="asset-info">
+                                <div class="asset-name">Publications</div>
+                                <div class="asset-count">3 papers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DARs Over Time -->
+                <div class="card">
+                    <h2 class="card-title"><span class="card-title-icon">📊</span> Data Access Requests Over Time</h2>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 16px;">Cumulative DARs submitted since study launch</p>
+                    <div class="chart-container">
+                        <div class="chart-bars">
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar" style="height: 16%;" data-value="40 DARs"></div>
+                                <div class="chart-label">Q1 2024</div>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar" style="height: 32%;" data-value="79 DARs"></div>
+                                <div class="chart-label">Q2 2024</div>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar" style="height: 52%;" data-value="129 DARs"></div>
+                                <div class="chart-label">Q3 2024</div>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar" style="height: 70%;" data-value="173 DARs"></div>
+                                <div class="chart-label">Q4 2024</div>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar" style="height: 88%;" data-value="218 DARs"></div>
+                                <div class="chart-label">Q1 2025</div>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar" style="height: 100%;" data-value="247 DARs"></div>
+                                <div class="chart-label">Q2 2025</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datasets Table -->
+                <div class="card">
+                    <h2 class="card-title"><span class="card-title-icon">📋</span> Datasets in This Study</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Dataset Name</th>
+                                <th>Study Name</th>
+                                <th>DUOS ID</th>
+                                <th>Data Type</th>
+                                <th>Participants</th>
+                                <th>Data Location</th>
+                                <th>Data Use</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" class="checkbox-input"></td>
+                                <td><a href="#" class="dataset-link">Glioma_Tcells_WucherpfennigSuvaR...</a></td>
+                                <td>Glioma_Tcells_Wuche...</td>
+                                <td>DUOS-000156</td>
+                                <td>RNA-Seq</td>
+                                <td>31</td>
+                                <td>Terra Workspace</td>
+                                <td>HMB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Reviews & Ratings -->
+                <div class="card">
+                    <h2 class="card-title"><span class="card-title-icon">⭐</span> Researcher Reviews</h2>
+                    
+                    <div class="rating-summary">
+                        <div class="rating-score">
+                            <div class="rating-number">4.6</div>
+                            <div class="stars">★★★★★</div>
+                            <div class="rating-count">based on 18 reviews</div>
+                        </div>
+                        <div class="rating-bars">
+                            <div class="rating-bar-row">
+                                <div class="rating-bar-label">5 stars</div>
+                                <div class="rating-bar-bg">
+                                    <div class="rating-bar-fill" style="width: 72%;"></div>
+                                </div>
+                                <div class="rating-bar-count">13</div>
+                            </div>
+                            <div class="rating-bar-row">
+                                <div class="rating-bar-label">4 stars</div>
+                                <div class="rating-bar-bg">
+                                    <div class="rating-bar-fill" style="width: 16%;"></div>
+                                </div>
+                                <div class="rating-bar-count">3</div>
+                            </div>
+                            <div class="rating-bar-row">
+                                <div class="rating-bar-label">3 stars</div>
+                                <div class="rating-bar-bg">
+                                    <div class="rating-bar-fill" style="width: 11%;"></div>
+                                </div>
+                                <div class="rating-bar-count">2</div>
+                            </div>
+                            <div class="rating-bar-row">
+                                <div class="rating-bar-label">2 stars</div>
+                                <div class="rating-bar-bg">
+                                    <div class="rating-bar-fill" style="width: 0%;"></div>
+                                </div>
+                                <div class="rating-bar-count">0</div>
+                            </div>
+                            <div class="rating-bar-row">
+                                <div class="rating-bar-label">1 star</div>
+                                <div class="rating-bar-bg">
+                                    <div class="rating-bar-fill" style="width: 0%;"></div>
+                                </div>
+                                <div class="rating-bar-count">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">JK</div>
+                                <div>
+                                    <div class="reviewer-name">Dr. Jennifer Kim</div>
+                                    <div class="review-date">February 15, 2025</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                        <p class="review-text">
+                            Exceptional dataset for glioma research. The single-cell resolution provided unprecedented insights into T cell heterogeneity in the tumor microenvironment. Data quality was excellent and metadata was comprehensive. Approval process was fast (3 days!) thanks to auto-approval.
+                        </p>
+                        <div class="review-helpful">
+                            Was this helpful?
+                            <button class="helpful-button">👍 Yes (12)</button>
+                            <button class="helpful-button">👎 No (0)</button>
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">MP</div>
+                                <div>
+                                    <div class="reviewer-name">Dr. Michael Patel</div>
+                                    <div class="review-date">January 28, 2025</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                        <p class="review-text">
+                            Outstanding resource for immunotherapy research. The NK gene expression data was exactly what we needed for our comparative analysis. Well-documented and easy to integrate with our existing pipelines. Highly recommend!
+                        </p>
+                        <div class="review-helpful">
+                            Was this helpful?
+                            <button class="helpful-button">👍 Yes (8)</button>
+                            <button class="helpful-button">👎 No (1)</button>
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">SC</div>
+                                <div>
+                                    <div class="reviewer-name">Dr. Sarah Chen</div>
+                                    <div class="review-date">December 10, 2024</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★☆</div>
+                        </div>
+                        <p class="review-text">
+                            Great dataset overall. Clinical annotations were thorough. Only minor issue was that some metadata fields could be more standardized, but this didn't impact our analysis significantly.
+                        </p>
+                        <div class="review-helpful">
+                            Was this helpful?
+                            <button class="helpful-button">👍 Yes (5)</button>
+                            <button class="helpful-button">👎 No (0)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Publications -->
+                <div class="card">
+                    <h2 class="card-title"><span class="card-title-icon">📖</span> Related Publications</h2>
+                    
+                    <div class="publication">
+                        <div class="publication-title">Dissecting the multicellular ecosystem of metastatic melanoma by single-cell RNA-seq</div>
+                        <div class="publication-meta">Jerby-Arnon L, Shah P, Cuoco MS, et al. | Cell | 2018</div>
+                        <a href="#" class="publication-link">View Publication →</a>
+                    </div>
+
+                    <div class="publication">
+                        <div class="publication-title">Single-cell map of diverse immune phenotypes in the breast tumor microenvironment</div>
+                        <div class="publication-meta">Azizi E, Carr AJ, Plitas G, et al. | Cell | 2018</div>
+                        <a href="#" class="publication-link">View Publication →</a>
+                    </div>
+
+                    <div class="publication">
+                        <div class="publication-title">An Immune Atlas of Clear Cell Renal Cell Carcinoma</div>
+                        <div class="publication-meta">Braun DA, Hou Y, Bakouny Z, et al. | Cell | 2020</div>
+                        <a href="#" class="publication-link">View Publication →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div>
+                <!-- Quick Action -->
+                <div class="card">
+                    <button class="action-button">Request Access to Dataset(s)</button>
+                    <button class="secondary-button">Export to Terra</button>
+                    <button class="secondary-button">Save to Favorites</button>
+                </div>
+
+                <!-- Impact Over Time -->
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+                        <span style="font-size: 13px; color: #666;">From</span>
+                        <a href="https://through.bio" target="_blank" style="text-decoration: none;">
+                            <div style="display: flex; align-items: center; gap: 6px; padding: 4px 12px; background-color: #f8f9fa; border-radius: 4px; transition: all 0.2s;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7z" fill="#0948b7"/>
+                                </svg>
+                                <span style="font-weight: 600; font-size: 13px; color: #0948b7;">through.bio</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <h2 class="card-title" style="font-size: 16px; margin-bottom: 8px;">📈 Impact Over Time</h2>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 20px;">
+                        This dataset has contributed to <strong>18 clinical trials</strong> through <strong>3k papers</strong>
+                    </p>
+                    
+                    <!-- Timeline Graph -->
+                    <div style="position: relative; height: 200px; margin-bottom: 20px;">
+                        <svg width="100%" height="200" style="overflow: visible;">
+                            <!-- Timeline line -->
+                            <line x1="10%" y1="180" x2="90%" y2="180" stroke="#e0e0e0" stroke-width="2"/>
+                            
+                            <!-- Data points (clinical trials citing this dataset) -->
+                            <circle cx="15%" cy="160" r="8" fill="#0948b7" opacity="0.3"/>
+                            <circle cx="25%" cy="145" r="9" fill="#0948b7" opacity="0.4"/>
+                            <circle cx="35%" cy="125" r="11" fill="#0948b7" opacity="0.5"/>
+                            <circle cx="50%" cy="90" r="14" fill="#0948b7" opacity="0.7"/>
+                            <circle cx="65%" cy="60" r="18" fill="#0948b7" opacity="0.8"/>
+                            <circle cx="85%" cy="30" r="22" fill="#0948b7"/>
+                            
+                            <!-- Connecting line -->
+                            <path d="M 15% 160 Q 25% 145, 35% 125 T 50% 90 T 65% 60 T 85% 30" 
+                                  stroke="#26a69a" stroke-width="2" fill="none" opacity="0.6"/>
+                            
+                            <!-- Year labels -->
+                            <text x="15%" y="195" font-size="11" fill="#666" text-anchor="middle">2019</text>
+                            <text x="35%" y="195" font-size="11" fill="#666" text-anchor="middle">2020</text>
+                            <text x="50%" y="195" font-size="11" fill="#666" text-anchor="middle">2021</text>
+                            <text x="65%" y="195" font-size="11" fill="#666" text-anchor="middle">2023</text>
+                            <text x="85%" y="195" font-size="11" fill="#666" text-anchor="middle">2025</text>
+                        </svg>
+                    </div>
+
+                    <!-- Impact Milestones -->
+                    <div style="background-color: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="font-size: 13px; font-weight: 700; color: #333; margin-bottom: 12px;">Impact Milestones</div>
+                        <div style="font-size: 13px; color: #555; line-height: 1.8;">
+                            <div style="margin-bottom: 8px;">
+                                <span style="font-weight: 600;">1st clinical trial:</span> 2 years
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <span style="font-weight: 600;">10th clinical trial:</span> 4 years
+                            </div>
+                            <div>
+                                <span style="font-weight: 600;">100th clinical trial:</span> 7 years
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Citations Until Trial -->
+                    <div style="background-color: #f8f9fa; padding: 16px; border-radius: 8px;">
+                        <div style="font-size: 13px; font-weight: 700; color: #333; margin-bottom: 8px;">Citations Until Trial</div>
+                        <div style="font-size: 12px; color: #666; margin-bottom: 12px;">
+                            Number of downstream citations until clinical trials
+                        </div>
+                        <div style="display: flex; gap: 8px; margin-bottom: 8px; align-items: center;">
+                            <div style="flex: 1; height: 8px; background-color: #e0e0e0; border-radius: 4px; position: relative;">
+                                <div style="width: 2%; height: 100%; background-color: #0948b7; border-radius: 4px;"></div>
+                            </div>
+                            <div style="font-size: 12px; color: #666; min-width: 50px; text-align: right; font-weight: 600;">6</div>
+                        </div>
+                        <div style="display: flex; gap: 8px; margin-bottom: 8px; align-items: center;">
+                            <div style="flex: 1; height: 8px; background-color: #e0e0e0; border-radius: 4px; position: relative;">
+                                <div style="width: 23%; height: 100%; background-color: #0948b7; border-radius: 4px;"></div>
+                            </div>
+                            <div style="font-size: 12px; color: #666; min-width: 50px; text-align: right; font-weight: 600;">125</div>
+                        </div>
+                        <div style="display: flex; gap: 8px; margin-bottom: 12px; align-items: center;">
+                            <div style="flex: 1; height: 8px; background-color: #e0e0e0; border-radius: 4px; position: relative;">
+                                <div style="width: 100%; height: 100%; background-color: #0948b7; border-radius: 4px;"></div>
+                            </div>
+                            <div style="font-size: 12px; color: #666; min-width: 50px; text-align: right; font-weight: 600;">547</div>
+                        </div>
+                        <div style="font-size: 12px; color: #666; padding-top: 12px; border-top: 1px solid #e0e0e0;">
+                            <div style="margin-bottom: 8px;"><strong>678 total papers</strong> in citation network</div>
+                            <div><strong>393 clinical trials</strong> citing papers in network</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Frequently Requested Together -->
+                <div class="card">
+                    <h2 class="card-title" style="font-size: 16px;">🔗 Frequently Requested Together</h2>
+                    <div style="font-size: 13px; color: #666; margin-bottom: 16px;">
+                        Researchers who requested this study also requested:
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="rec-title">TCGA Glioblastoma</div>
+                        <div class="rec-meta">Cancer genomics | 617 participants</div>
+                        <div class="rec-match">68% match</div>
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="rec-title">Brain Tumor scRNA-seq Atlas</div>
+                        <div class="rec-meta">Single-cell sequencing | 89 participants</div>
+                        <div class="rec-match">72% match</div>
+                    </div>
+                </div>
+
+                <!-- You Might Also Like -->
+                <div class="card">
+                    <h2 class="card-title" style="font-size: 16px;">💡 You Might Also Like</h2>
+                    <div style="font-size: 13px; color: #666; margin-bottom: 16px;">
+                        Based on your research interests:
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="rec-title">Immune Cell Atlas - Pan-Cancer</div>
+                        <div class="rec-meta">Immunology | 1,247 participants</div>
+                        <div class="rec-match">⚡ Auto-approval available</div>
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="rec-title">Pediatric Brain Tumor Study</div>
+                        <div class="rec-meta">Neuro-oncology | 203 participants</div>
+                        <div class="rec-match">85% match</div>
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="rec-title">T Cell Exhaustion Markers</div>
+                        <div class="rec-meta">Immunotherapy | 412 participants</div>
+                        <div class="rec-match">79% match</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
