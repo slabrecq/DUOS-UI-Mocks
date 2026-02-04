@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUOS Study Page - Material UI</title>
+    
+    <!-- React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Material UI -->
+    <script src="https://unpkg.com/@mui/material@5.14.18/umd/material-ui.production.min.js"></script>
+    
+    <!-- Emotion (required for MUI styling) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+        }
+        #root {
+            width: 100%;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { 
+            AppBar, Toolbar, Typography, Box, Container, Grid, Card, CardContent, 
+            Chip, LinearProgress, Avatar, Rating, Button, Divider, IconButton,
+            Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+            Paper, Link, Checkbox
+        } = MaterialUI;
+
+        const theme = {
+            palette: {
+                primary: {
+                    main: '#0948b7',
+                    dark: '#073a94',
+                },
+                secondary: {
+                    main: '#26a69a',
+                },
+                background: {
+                    default: '#f5f5f5',
+                    paper: '#ffffff',
+                },
+            },
+        };
+
+        // Top Navigation Component
+        function TopNav() {
+            return (
+                <AppBar position="static" sx={{ backgroundColor: '#0a2540' }}>
+                    <Toolbar>
+                        <Box sx={{ 
+                            width: 50, 
+                            height: 50, 
+                            bgcolor: 'primary.main', 
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'white',
+                            fontWeight: 700,
+                            fontSize: 18,
+                            mr: 2
+                        }}>
+                            DUOS
+                        </Box>
+                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                            Researcher Console
+                        </Typography>
+                        <Box sx={{ flexGrow: 1 }} />
+                        <Button color="inherit" sx={{ mr: 2 }}>Help</Button>
+                        <Button color="inherit" sx={{ mr: 2 }}>Contact Us</Button>
+                        <Box sx={{ textAlign: 'right' }}>
+                            <Typography variant="body2" sx={{ fontWeight: 600, color: 'white' }}>
+                                Sofia Labrecque Nieves
+                            </Typography>
+                            <Typography variant="caption" sx={{ color: '#b0b0b0' }}>
+                                slabrecq@broadinstitute.org
+                            </Typography>
+                        </Box>
+                    </Toolbar>
+                </AppBar>
+            );
+        }
+
+        // Quick Stats Banner
+        function QuickStats() {
+            const stats = [
+                { number: '247', label: 'Total DARs' },
+                { number: '89%', label: 'Approval Rate' },
+                { number: '4.2', label: 'Avg Days to Approval' },
+                { number: '4.6★', label: 'User Rating' },
+            ];
+
+            return (
+                <Grid container spacing={3} sx={{ mt: 3, pt: 3, borderTop: '2px solid #f0f0f0' }}>
+                    {stats.map((stat, index) => (
+                        <Grid item xs={12} sm={6} md={3} key={index}>
+                            <Box sx={{ textAlign: 'center' }}>
+                                <Typography variant="h3" sx={{ color: 'primary.main', fontWeight: 700 }}>
+                                    {stat.number}
+                                </Typography>
+                                <Typography variant="caption" sx={{ 
+                                    color: 'text.secondary', 
+                                    textTransform: 'uppercase',
+                                    letterSpacing: 0.5 
+                                }}>
+                                    {stat.label}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    ))}
+                </Grid>
+            );
+        }
+
+        // DAR Chart Component
+        function DARChart() {
+            const data = [
+                { quarter: 'Q1 2024', value: 40, height: '16%' },
+                { quarter: 'Q2 2024', value: 79, height: '32%' },
+                { quarter: 'Q3 2024', value: 129, height: '52%' },
+                { quarter: 'Q4 2024', value: 173, height: '70%' },
+                { quarter: 'Q1 2025', value: 218, height: '88%' },
+                { quarter: 'Q2 2025', value: 247, height: '100%' },
+            ];
+
+            return (
+                <Box sx={{ height: 280, position: 'relative', p: 2 }}>
+                    <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'flex-end', 
+                        justifyContent: 'space-around',
+                        height: 220,
+                        gap: 1.5,
+                        borderBottom: '2px solid #e0e0e0'
+                    }}>
+                        {data.map((item, index) => (
+                            <Box key={index} sx={{ 
+                                flex: 1, 
+                                display: 'flex', 
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'flex-end',
+                                height: '100%'
+                            }}>
+                                <Box
+                                    sx={{
+                                        width: '100%',
+                                        maxWidth: 60,
+                                        height: item.height,
+                                        background: 'linear-gradient(to top, #0948b7, #26a69a)',
+                                        borderRadius: '4px 4px 0 0',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s',
+                                        '&:hover': {
+                                            transform: 'translateY(-4px)',
+                                            boxShadow: '0 4px 8px rgba(9, 72, 183, 0.3)',
+                                        },
+                                    }}
+                                    title={`${item.value} DARs`}
+                                />
+                                <Typography variant="caption" sx={{ mt: 1, color: 'text.secondary' }}>
+                                    {item.quarter}
+                                </Typography>
+                            </Box>
+                        ))}
+                    </Box>
+                </Box>
+            );
+        }
+
+        // Review Component
+        function Review({ name, date, rating, text, helpful }) {
+            const initials = name.split(' ').map(n => n[0]).join('');
+            
+            return (
+                <Box sx={{ py: 2.5, borderBottom: '1px solid #e0e0e0' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1.5 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                            <Avatar sx={{ 
+                                background: 'linear-gradient(135deg, #0948b7, #26a69a)',
+                                width: 40,
+                                height: 40,
+                                fontWeight: 700
+                            }}>
+                                {initials}
+                            </Avatar>
+                            <Box>
+                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                    {name}
+                                </Typography>
+                                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                    {date}
+                                </Typography>
+                            </Box>
+                        </Box>
+                        <Rating value={rating} readOnly size="small" />
+                    </Box>
+                    <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1.5, lineHeight: 1.6 }}>
+                        {text}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                            Was this helpful?
+                        </Typography>
+                        <Button size="small" variant="outlined" sx={{ fontSize: 11 }}>
+                            👍 Yes ({helpful.yes})
+                        </Button>
+                        <Button size="small" variant="outlined" sx={{ fontSize: 11 }}>
+                            👎 No ({helpful.no})
+                        </Button>
+                    </Box>
+                </Box>
+            );
+        }
+
+        // Impact Timeline Component
+        function ImpactTimeline() {
+            return (
+                <svg width="100%" height="200" style={{ overflow: 'visible' }}>
+                    <line x1="10%" y1="180" x2="90%" y2="180" stroke="#e0e0e0" strokeWidth="2"/>
+                    
+                    <circle cx="15%" cy="160" r="8" fill="#0948b7" opacity="0.3"/>
+                    <circle cx="25%" cy="145" r="9" fill="#0948b7" opacity="0.4"/>
+                    <circle cx="35%" cy="125" r="11" fill="#0948b7" opacity="0.5"/>
+                    <circle cx="50%" cy="90" r="14" fill="#0948b7" opacity="0.7"/>
+                    <circle cx="65%" cy="60" r="18" fill="#0948b7" opacity="0.8"/>
+                    <circle cx="85%" cy="30" r="22" fill="#0948b7"/>
+                    
+                    <path d="M 15% 160 Q 25% 145, 35% 125 T 50% 90 T 65% 60 T 85% 30" 
+                          stroke="#26a69a" strokeWidth="2" fill="none" opacity="0.6"/>
+                    
+                    <text x="15%" y="195" fontSize="11" fill="#666" textAnchor="middle">2019</text>
+                    <text x="35%" y="195" fontSize="11" fill="#666" textAnchor="middle">2020</text>
+                    <text x="50%" y="195" fontSize="11" fill="#666" textAnchor="middle">2021</text>
+                    <text x="65%" y="195" fontSize="11" fill="#666" textAnchor="middle">2023</text>
+                    <text x="85%" y="195" fontSize="11" fill="#666" textAnchor="middle">2025</text>
+                </svg>
+            );
+        }
+
+        // Main App Component
+        function App() {
+            const reviews = [
+                {
+                    name: 'Dr. Jennifer Kim',
+                    date: 'February 15, 2025',
+                    rating: 5,
+                    text: 'Exceptional dataset for glioma research. The single-cell resolution provided unprecedented insights into T cell heterogeneity in the tumor microenvironment. Data quality was excellent and metadata was comprehensive. Approval process was fast (3 days!) thanks to auto-approval.',
+                    helpful: { yes: 12, no: 0 }
+                },
+                {
+                    name: 'Dr. Michael Patel',
+                    date: 'January 28, 2025',
+                    rating: 5,
+                    text: 'Outstanding resource for immunotherapy research. The NK gene expression data was exactly what we needed for our comparative analysis. Well-documented and easy to integrate with our existing pipelines. Highly recommend!',
+                    helpful: { yes: 8, no: 1 }
+                },
+                {
+                    name: 'Dr. Sarah Chen',
+                    date: 'December 10, 2024',
+                    rating: 4,
+                    text: 'Great dataset overall. Clinical annotations were thorough. Only minor issue was that some metadata fields could be more standardized, but this didn\'t impact our analysis significantly.',
+                    helpful: { yes: 5, no: 0 }
+                }
+            ];
+
+            return (
+                <Box>
+                    <TopNav />
+                    
+                    <Container maxWidth="xl" sx={{ py: 3 }}>
+                        {/* Back Button */}
+                        <Button 
+                            startIcon={<span>←</span>}
+                            sx={{ mb: 3, color: 'primary.main', fontWeight: 600 }}
+                        >
+                            Back to library
+                        </Button>
+
+                        {/* Study Header */}
+                        <Paper sx={{ p: 4, mb: 3 }}>
+                            <Typography variant="subtitle1" sx={{ color: 'primary.main', fontWeight: 700, mb: 1.5 }}>
+                                DUOS-S3
+                            </Typography>
+                            <Typography variant="h4" sx={{ fontWeight: 700, mb: 2 }}>
+                                Glioma_Tcells_WucherpfennigSuvaRegev_scRNASeq
+                            </Typography>
+                            
+                            <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', mb: 2 }}>
+                                <Chip label="⚡ Auto-Approval Available" sx={{ bgcolor: '#e8f5e9', color: '#2e7d32' }} />
+                                <Chip label="🔓 Open Access Datasets" sx={{ bgcolor: '#e3f2fd', color: '#1565c0' }} />
+                                <Chip label="🔄 Recently Updated" sx={{ bgcolor: '#fff3e0', color: '#e65100' }} />
+                            </Box>
+
+                            <QuickStats />
+                        </Paper>
+
+                        {/* Two Column Layout */}
+                        <Grid container spacing={3}>
+                            {/* Left Column */}
+                            <Grid item xs={12} md={8}>
+                                {/* Study Description */}
+                                <Card sx={{ mb: 3 }}>
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>📄</span> Study Description
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ lineHeight: 1.8, color: 'text.secondary', mb: 2 }}>
+                                            We profiled and characterized the types, programs, and states of glioma-infiltrating T cells isolated from fresh tumor samples using full-length or 5' and single-cell RNA-seq (scRNA-seq) in 31 adult patients with either IDH-wildtype glioblastoma (GBM) or IDH-mutant glioma (IDH-G).
+                                        </Typography>
+                                        
+                                        <Grid container spacing={2} sx={{ mt: 2 }}>
+                                            <Grid item xs={6}>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase' }}>
+                                                    Participants
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>31</Typography>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase' }}>
+                                                    Phenotype
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>High Grade Glioma</Typography>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase' }}>
+                                                    Species
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>Human</Typography>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase' }}>
+                                                    PI Name
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>Aviv Regev, Mario L. Suvà</Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Study Assets */}
+                                <Card sx={{ mb: 3 }}>
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>📦</span> Study Assets
+                                        </Typography>
+                                        <Grid container spacing={2}>
+                                            {[
+                                                { icon: '🧬', name: 'Datasets', count: '1 available' },
+                                                { icon: '🔬', name: 'Models', count: '2 computational models' },
+                                                { icon: '💻', name: 'Featured Workspaces', count: '1 Terra workspace' },
+                                                { icon: '📚', name: 'Publications', count: '3 papers' },
+                                            ].map((asset, i) => (
+                                                <Grid item xs={6} key={i}>
+                                                    <Paper sx={{ 
+                                                        p: 2, 
+                                                        bgcolor: '#f8f9fa',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: 1.5,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s',
+                                                        border: '2px solid transparent',
+                                                        '&:hover': {
+                                                            borderColor: 'primary.main',
+                                                            bgcolor: 'white',
+                                                            boxShadow: 1
+                                                        }
+                                                    }}>
+                                                        <Box sx={{ 
+                                                            fontSize: 24,
+                                                            width: 40,
+                                                            height: 40,
+                                                            bgcolor: 'white',
+                                                            borderRadius: 1,
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center'
+                                                        }}>
+                                                            {asset.icon}
+                                                        </Box>
+                                                        <Box>
+                                                            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                                                {asset.name}
+                                                            </Typography>
+                                                            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                                                {asset.count}
+                                                            </Typography>
+                                                        </Box>
+                                                    </Paper>
+                                                </Grid>
+                                            ))}
+                                        </Grid>
+                                    </CardContent>
+                                </Card>
+
+                                {/* DARs Over Time */}
+                                <Card sx={{ mb: 3 }}>
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>📊</span> Data Access Requests Over Time
+                                        </Typography>
+                                        <Typography variant="caption" sx={{ color: 'text.secondary', mb: 2, display: 'block' }}>
+                                            Cumulative DARs submitted since study launch
+                                        </Typography>
+                                        <DARChart />
+                                    </CardContent>
+                                </Card>
+
+                                {/* Datasets Table */}
+                                <Card sx={{ mb: 3 }}>
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>📋</span> Datasets in This Study
+                                        </Typography>
+                                        <TableContainer>
+                                            <Table size="small">
+                                                <TableHead>
+                                                    <TableRow sx={{ bgcolor: '#f8f9fa' }}>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox />
+                                                        </TableCell>
+                                                        <TableCell>Dataset Name</TableCell>
+                                                        <TableCell>DUOS ID</TableCell>
+                                                        <TableCell>Data Type</TableCell>
+                                                        <TableCell>Participants</TableCell>
+                                                        <TableCell>Data Use</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                Glioma_Tcells_WucherpfennigSuvaR...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000156</TableCell>
+                                                        <TableCell>RNA-Seq</TableCell>
+                                                        <TableCell>31</TableCell>
+                                                        <TableCell>HMB</TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Reviews */}
+                                <Card sx={{ mb: 3 }}>
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>⭐</span> Researcher Reviews
+                                        </Typography>
+                                        
+                                        {/* Rating Summary */}
+                                        <Paper sx={{ p: 2.5, bgcolor: '#f8f9fa', mb: 3, display: 'flex', gap: 3 }}>
+                                            <Box sx={{ textAlign: 'center' }}>
+                                                <Typography variant="h2" sx={{ fontWeight: 700 }}>4.6</Typography>
+                                                <Rating value={4.6} readOnly precision={0.1} />
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>
+                                                    based on 18 reviews
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ flex: 1 }}>
+                                                {[
+                                                    { stars: 5, value: 72, count: 13 },
+                                                    { stars: 4, value: 16, count: 3 },
+                                                    { stars: 3, value: 11, count: 2 },
+                                                    { stars: 2, value: 0, count: 0 },
+                                                    { stars: 1, value: 0, count: 0 },
+                                                ].map((bar, i) => (
+                                                    <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+                                                        <Typography variant="caption" sx={{ width: 60 }}>
+                                                            {bar.stars} stars
+                                                        </Typography>
+                                                        <LinearProgress 
+                                                            variant="determinate" 
+                                                            value={bar.value} 
+                                                            sx={{ flex: 1, height: 8, borderRadius: 1 }}
+                                                        />
+                                                        <Typography variant="caption" sx={{ width: 40, textAlign: 'right' }}>
+                                                            {bar.count}
+                                                        </Typography>
+                                                    </Box>
+                                                ))}
+                                            </Box>
+                                        </Paper>
+
+                                        {/* Individual Reviews */}
+                                        {reviews.map((review, i) => (
+                                            <Review key={i} {...review} />
+                                        ))}
+                                    </CardContent>
+                                </Card>
+
+                                {/* Publications */}
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>📖</span> Related Publications
+                                        </Typography>
+                                        
+                                        {[
+                                            {
+                                                title: 'Dissecting the multicellular ecosystem of metastatic melanoma by single-cell RNA-seq',
+                                                authors: 'Jerby-Arnon L, Shah P, Cuoco MS, et al.',
+                                                journal: 'Cell',
+                                                year: '2018'
+                                            },
+                                            {
+                                                title: 'Single-cell map of diverse immune phenotypes in the breast tumor microenvironment',
+                                                authors: 'Azizi E, Carr AJ, Plitas G, et al.',
+                                                journal: 'Cell',
+                                                year: '2018'
+                                            },
+                                            {
+                                                title: 'An Immune Atlas of Clear Cell Renal Cell Carcinoma',
+                                                authors: 'Braun DA, Hou Y, Bakouny Z, et al.',
+                                                journal: 'Cell',
+                                                year: '2020'
+                                            }
+                                        ].map((pub, i) => (
+                                            <Paper key={i} sx={{ p: 2, mb: 1.5, bgcolor: '#f8f9fa', borderLeft: '4px solid', borderColor: 'primary.main' }}>
+                                                <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+                                                    {pub.title}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1 }}>
+                                                    {pub.authors} | {pub.journal} | {pub.year}
+                                                </Typography>
+                                                <Link href="#" sx={{ fontSize: 13, fontWeight: 600 }}>
+                                                    View Publication →
+                                                </Link>
+                                            </Paper>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+
+                            {/* Right Sidebar */}
+                            <Grid item xs={12} md={4}>
+                                {/* Quick Actions */}
+                                <Card sx={{ mb: 2 }}>
+                                    <CardContent>
+                                        <Button variant="contained" fullWidth sx={{ mb: 1.5, py: 2 }}>
+                                            Request Access to Dataset(s)
+                                        </Button>
+                                        <Button variant="outlined" fullWidth sx={{ mb: 1.5 }}>
+                                            Export to Terra
+                                        </Button>
+                                        <Button variant="outlined" fullWidth>
+                                            Save to Favorites
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Impact Over Time */}
+                                <Card sx={{ mb: 2 }}>
+                                    <CardContent>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                                            <Typography variant="caption" sx={{ color: 'text.secondary' }}>From</Typography>
+                                            <Link href="https://through.bio" target="_blank" sx={{ textDecoration: 'none' }}>
+                                                <Box sx={{ 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    gap: 0.75, 
+                                                    px: 1.5, 
+                                                    py: 0.5, 
+                                                    bgcolor: '#f8f9fa', 
+                                                    borderRadius: 1 
+                                                }}>
+                                                    <Box sx={{ width: 20, height: 20, bgcolor: 'primary.main', borderRadius: 0.5 }} />
+                                                    <Typography variant="caption" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                                                        through.bio
+                                                    </Typography>
+                                                </Box>
+                                            </Link>
+                                        </Box>
+
+                                        <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
+                                            📈 Impact Over Time
+                                        </Typography>
+                                        <Typography variant="caption" sx={{ color: 'text.secondary', mb: 2.5, display: 'block' }}>
+                                            This dataset has contributed to <strong>18 clinical trials</strong> through <strong>3k papers</strong>
+                                        </Typography>
+
+                                        <ImpactTimeline />
+
+                                        {/* Impact Milestones */}
+                                        <Paper sx={{ p: 2, bgcolor: '#f8f9fa', mb: 2, mt: 2 }}>
+                                            <Typography variant="caption" sx={{ fontWeight: 700, display: 'block', mb: 1.5 }}>
+                                                Impact Milestones
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ display: 'block', mb: 1 }}>
+                                                <strong>1st clinical trial:</strong> 2 years
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ display: 'block', mb: 1 }}>
+                                                <strong>10th clinical trial:</strong> 4 years
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ display: 'block' }}>
+                                                <strong>100th clinical trial:</strong> 7 years
+                                            </Typography>
+                                        </Paper>
+
+                                        {/* Citations Until Trial */}
+                                        <Paper sx={{ p: 2, bgcolor: '#f8f9fa' }}>
+                                            <Typography variant="caption" sx={{ fontWeight: 700, display: 'block', mb: 0.5 }}>
+                                                Citations Until Trial
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1.5 }}>
+                                                Number of downstream citations until clinical trials
+                                            </Typography>
+                                            
+                                            {[
+                                                { value: 2, count: 6 },
+                                                { value: 23, count: 125 },
+                                                { value: 100, count: 547 },
+                                            ].map((item, i) => (
+                                                <Box key={i} sx={{ display: 'flex', gap: 1, mb: 1, alignItems: 'center' }}>
+                                                    <LinearProgress 
+                                                        variant="determinate" 
+                                                        value={item.value} 
+                                                        sx={{ flex: 1, height: 8, borderRadius: 1 }}
+                                                    />
+                                                    <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 50, textAlign: 'right' }}>
+                                                        {item.count}
+                                                    </Typography>
+                                                </Box>
+                                            ))}
+                                            
+                                            <Divider sx={{ my: 1.5 }} />
+                                            <Typography variant="caption" sx={{ display: 'block', mb: 0.5 }}>
+                                                <strong>678 total papers</strong> in citation network
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ display: 'block' }}>
+                                                <strong>393 clinical trials</strong> citing papers in network
+                                            </Typography>
+                                        </Paper>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Frequently Requested Together */}
+                                <Card sx={{ mb: 2 }}>
+                                    <CardContent>
+                                        <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                                            🔗 Frequently Requested Together
+                                        </Typography>
+                                        <Typography variant="caption" sx={{ color: 'text.secondary', mb: 2, display: 'block' }}>
+                                            Researchers who requested this study also requested:
+                                        </Typography>
+                                        
+                                        {[
+                                            { title: 'TCGA Glioblastoma', meta: 'Cancer genomics | 617 participants', match: '68% match' },
+                                            { title: 'Brain Tumor scRNA-seq Atlas', meta: 'Single-cell sequencing | 89 participants', match: '72% match' },
+                                        ].map((rec, i) => (
+                                            <Paper key={i} sx={{ 
+                                                p: 2, 
+                                                mb: 1.5, 
+                                                bgcolor: '#f8f9fa',
+                                                cursor: 'pointer',
+                                                border: '2px solid transparent',
+                                                transition: 'all 0.2s',
+                                                '&:hover': {
+                                                    borderColor: 'primary.main',
+                                                    bgcolor: 'white',
+                                                    boxShadow: 1
+                                                }
+                                            }}>
+                                                <Typography variant="body2" sx={{ color: 'primary.main', fontWeight: 600, mb: 0.5 }}>
+                                                    {rec.title}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>
+                                                    {rec.meta}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'secondary.main', fontWeight: 600 }}>
+                                                    {rec.match}
+                                                </Typography>
+                                            </Paper>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+
+                                {/* You Might Also Like */}
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                                            💡 You Might Also Like
+                                        </Typography>
+                                        <Typography variant="caption" sx={{ color: 'text.secondary', mb: 2, display: 'block' }}>
+                                            Based on your research interests:
+                                        </Typography>
+                                        
+                                        {[
+                                            { title: 'Immune Cell Atlas - Pan-Cancer', meta: 'Immunology | 1,247 participants', badge: '⚡ Auto-approval' },
+                                            { title: 'Pediatric Brain Tumor Study', meta: 'Neuro-oncology | 203 participants', badge: '85% match' },
+                                            { title: 'T Cell Exhaustion Markers', meta: 'Immunotherapy | 412 participants', badge: '79% match' },
+                                        ].map((rec, i) => (
+                                            <Paper key={i} sx={{ 
+                                                p: 2, 
+                                                mb: 1.5, 
+                                                bgcolor: '#f8f9fa',
+                                                cursor: 'pointer',
+                                                border: '2px solid transparent',
+                                                transition: 'all 0.2s',
+                                                '&:hover': {
+                                                    borderColor: 'primary.main',
+                                                    bgcolor: 'white',
+                                                    boxShadow: 1
+                                                }
+                                            }}>
+                                                <Typography variant="body2" sx={{ color: 'primary.main', fontWeight: 600, mb: 0.5 }}>
+                                                    {rec.title}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>
+                                                    {rec.meta}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'secondary.main', fontWeight: 600 }}>
+                                                    {rec.badge}
+                                                </Typography>
+                                            </Paper>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </Box>
+            );
+        }
+
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
