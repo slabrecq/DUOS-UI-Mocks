@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUOS Study Page - Material UI</title>
+    
+    <!-- React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Material UI -->
+    <script src="https://unpkg.com/@mui/material@5.14.18/umd/material-ui.production.min.js"></script>
+    
+    <!-- Emotion (required for MUI styling) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+        }
+        #root {
+            width: 100%;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { 
+            AppBar, Toolbar, Typography, Box, Container, Grid, Card, CardContent, 
+            Chip, LinearProgress, Avatar, Rating, Button, Divider, IconButton,
+            Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+            Paper, Link, Checkbox
+        } = MaterialUI;
+
+        const theme = {
+            palette: {
+                primary: {
+                    main: '#0948b7',
+                    dark: '#073a94',
+                },
+                secondary: {
+                    main: '#26a69a',
+                },
+                background: {
+                    default: '#f5f5f5',
+                    paper: '#ffffff',
+                },
+            },
+        };
+
+        // Top Navigation Component
+        function TopNav() {
+            return (
+                <AppBar position="static" sx={{ backgroundColor: '#0a2540' }}>
+                    <Toolbar>
+                        <Box sx={{ 
+                            width: 50, 
+                            height: 50, 
+                            bgcolor: 'primary.main', 
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'white',
+                            fontWeight: 700,
+                            fontSize: 18,
+                            mr: 2
+                        }}>
+                            DUOS
+                        </Box>
+                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                            Researcher Console
+                        </Typography>
+                        <Box sx={{ flexGrow: 1 }} />
+                        <Button color="inherit" sx={{ mr: 2 }}>Help</Button>
+                        <Button color="inherit" sx={{ mr: 2 }}>Contact Us</Button>
+                        <Box sx={{ textAlign: 'right' }}>
+                            <Typography variant="body2" sx={{ fontWeight: 600, color: 'white' }}>
+                                Sofia Labrecque Nieves
+                            </Typography>
+                            <Typography variant="caption" sx={{ color: '#b0b0b0' }}>
+                                slabrecq@broadinstitute.org
+                            </Typography>
+                        </Box>
+                    </Toolbar>
+                </AppBar>
+            );
+        }
+
+        // Quick Stats Banner
+        function QuickStats() {
+            const stats = [
+                { number: '247', label: 'Total DARs' },
+                { number: '11,961', label: 'Participants' },
+                { number: '4.2', label: 'Avg Days to Approval' },
+                { number: '4.6★', label: 'User Rating' },
+            ];
+
+            return (
+                <Grid container spacing={3} sx={{ mt: 3, pt: 3, borderTop: '2px solid #f0f0f0' }}>
+                    {stats.map((stat, index) => (
+                        <Grid item xs={12} sm={6} md={3} key={index}>
+                            <Box sx={{ textAlign: 'center' }}>
+                                <Typography variant="h3" sx={{ color: 'primary.main', fontWeight: 700 }}>
+                                    {stat.number}
+                                </Typography>
+                                <Typography variant="caption" sx={{ 
+                                    color: 'text.secondary', 
+                                    textTransform: 'uppercase',
+                                    letterSpacing: 0.5 
+                                }}>
+                                    {stat.label}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    ))}
+                </Grid>
+            );
+        }
+
+        // DAR Chart Component
+        function DARChart() {
+            const data = [
+                { quarter: 'Q1 2024', approved: 40, denied: 5, total: 45 },
+                { quarter: 'Q2 2024', approved: 79, denied: 8, total: 87 },
+                { quarter: 'Q3 2024', approved: 129, denied: 12, total: 141 },
+                { quarter: 'Q4 2024', approved: 173, denied: 18, total: 191 },
+                { quarter: 'Q1 2025', approved: 218, denied: 22, total: 240 },
+                { quarter: 'Q2 2025', approved: 247, denied: 26, total: 273 },
+            ];
+
+            const maxValue = Math.max(...data.map(d => d.total));
+
+            return (
+                <Box sx={{ height: 280, position: 'relative', p: 2 }}>
+                    <Box sx={{ display: 'flex', gap: 1, mb: 2, justifyContent: 'center' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                            <Box sx={{ width: 16, height: 16, bgcolor: '#4caf50', borderRadius: 0.5 }} />
+                            <Typography variant="caption">Approved</Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                            <Box sx={{ width: 16, height: 16, bgcolor: '#ef5350', borderRadius: 0.5 }} />
+                            <Typography variant="caption">Denied</Typography>
+                        </Box>
+                    </Box>
+                    <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'flex-end', 
+                        justifyContent: 'space-around',
+                        height: 200,
+                        gap: 1.5,
+                        borderBottom: '2px solid #e0e0e0'
+                    }}>
+                        {data.map((item, index) => {
+                            const totalHeight = (item.total / maxValue) * 100;
+                            const approvedPercent = (item.approved / item.total) * 100;
+                            const deniedPercent = (item.denied / item.total) * 100;
+                            
+                            return (
+                                <Box key={index} sx={{ 
+                                    flex: 1, 
+                                    display: 'flex', 
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-end',
+                                    height: '100%'
+                                }}>
+                                    <Box
+                                        sx={{
+                                            width: '100%',
+                                            maxWidth: 60,
+                                            height: `${totalHeight}%`,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            borderRadius: '4px 4px 0 0',
+                                            overflow: 'hidden',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s',
+                                            '&:hover': {
+                                                transform: 'translateY(-4px)',
+                                                boxShadow: '0 4px 8px rgba(9, 72, 183, 0.3)',
+                                            },
+                                        }}
+                                        title={`${item.approved} Approved, ${item.denied} Denied`}
+                                    >
+                                        <Box sx={{
+                                            height: `${approvedPercent}%`,
+                                            bgcolor: '#4caf50',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}>
+                                            {item.approved > 30 && (
+                                                <Typography variant="caption" sx={{ fontWeight: 700, color: 'white', fontSize: '0.7rem' }}>
+                                                    {item.approved}
+                                                </Typography>
+                                            )}
+                                        </Box>
+                                        <Box sx={{
+                                            height: `${deniedPercent}%`,
+                                            bgcolor: '#ef5350'
+                                        }} />
+                                    </Box>
+                                    <Typography variant="caption" sx={{ mt: 1, color: 'text.secondary' }}>
+                                        {item.quarter}
+                                    </Typography>
+                                </Box>
+                            );
+                        })}
+                    </Box>
+                </Box>
+            );
+        }
+
+        // Review Component
+        function Review({ name, date, rating, text, helpful }) {
+            const initials = name.split(' ').map(n => n[0]).join('');
+            
+            return (
+                <Box sx={{ py: 2.5, borderBottom: '1px solid #e0e0e0' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1.5 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                            <Avatar sx={{ 
+                                background: 'linear-gradient(135deg, #0948b7, #26a69a)',
+                                width: 40,
+                                height: 40,
+                                fontWeight: 700
+                            }}>
+                                {initials}
+                            </Avatar>
+                            <Box>
+                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                    {name}
+                                </Typography>
+                                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                    {date}
+                                </Typography>
+                            </Box>
+                        </Box>
+                        <Rating value={rating} readOnly size="small" />
+                    </Box>
+                    <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1.5, lineHeight: 1.6 }}>
+                        {text}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                            Was this helpful?
+                        </Typography>
+                        <Button size="small" variant="outlined" sx={{ fontSize: 11 }}>
+                            👍 Yes ({helpful.yes})
+                        </Button>
+                        <Button size="small" variant="outlined" sx={{ fontSize: 11 }}>
+                            👎 No ({helpful.no})
+                        </Button>
+                    </Box>
+                </Box>
+            );
+        }
+
+        // Impact Timeline Component
+        function ImpactTimeline() {
+            return (
+                <svg width="100%" height="200" style={{ overflow: 'visible' }}>
+                    <line x1="10%" y1="180" x2="90%" y2="180" stroke="#e0e0e0" strokeWidth="2"/>
+                    
+                    <circle cx="15%" cy="160" r="8" fill="#0948b7" opacity="0.3"/>
+                    <circle cx="25%" cy="145" r="9" fill="#0948b7" opacity="0.4"/>
+                    <circle cx="35%" cy="125" r="11" fill="#0948b7" opacity="0.5"/>
+                    <circle cx="50%" cy="90" r="14" fill="#0948b7" opacity="0.7"/>
+                    <circle cx="65%" cy="60" r="18" fill="#0948b7" opacity="0.8"/>
+                    <circle cx="85%" cy="30" r="22" fill="#0948b7"/>
+                    
+                    <path d="M 15% 160 Q 25% 145, 35% 125 T 50% 90 T 65% 60 T 85% 30" 
+                          stroke="#26a69a" strokeWidth="2" fill="none" opacity="0.6"/>
+                    
+                    <text x="15%" y="195" fontSize="11" fill="#666" textAnchor="middle">2019</text>
+                    <text x="35%" y="195" fontSize="11" fill="#666" textAnchor="middle">2020</text>
+                    <text x="50%" y="195" fontSize="11" fill="#666" textAnchor="middle">2021</text>
+                    <text x="65%" y="195" fontSize="11" fill="#666" textAnchor="middle">2023</text>
+                    <text x="85%" y="195" fontSize="11" fill="#666" textAnchor="middle">2025</text>
+                </svg>
+            );
+        }
+
+        // Main App Component
+        function App() {
+            const [selectedDatasets, setSelectedDatasets] = React.useState([]);
+            const [selectedModels, setSelectedModels] = React.useState([]);
+            const [selectedWorkspaces, setSelectedWorkspaces] = React.useState([]);
+            const [selectedPublications, setSelectedPublications] = React.useState([]);
+            const [darsExpanded, setDarsExpanded] = React.useState(false);
+
+            const datasetIds = Array.from({ length: 10 }, (_, i) => i);
+            const modelIds = [0, 1];
+            const workspaceIds = [0];
+            const publicationIds = [0, 1, 2];
+
+            const handleSelectAllDatasets = (event) => {
+                if (event.target.checked) {
+                    setSelectedDatasets(datasetIds);
+                } else {
+                    setSelectedDatasets([]);
+                }
+            };
+
+            const handleSelectDataset = (id) => {
+                setSelectedDatasets(prev => 
+                    prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+                );
+            };
+
+            const handleSelectAllModels = (event) => {
+                if (event.target.checked) {
+                    setSelectedModels(modelIds);
+                } else {
+                    setSelectedModels([]);
+                }
+            };
+
+            const handleSelectModel = (id) => {
+                setSelectedModels(prev => 
+                    prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+                );
+            };
+
+            const handleSelectAllWorkspaces = (event) => {
+                if (event.target.checked) {
+                    setSelectedWorkspaces(workspaceIds);
+                } else {
+                    setSelectedWorkspaces([]);
+                }
+            };
+
+            const handleSelectWorkspace = (id) => {
+                setSelectedWorkspaces(prev => 
+                    prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+                );
+            };
+
+            const handleSelectAllPublications = (event) => {
+                if (event.target.checked) {
+                    setSelectedPublications(publicationIds);
+                } else {
+                    setSelectedPublications([]);
+                }
+            };
+
+            const handleSelectPublication = (id) => {
+                setSelectedPublications(prev => 
+                    prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+                );
+            };
+
+            const reviews = [
+                {
+                    name: 'Dr. Jennifer Kim',
+                    date: 'February 15, 2025',
+                    rating: 5,
+                    text: 'Exceptional dataset for eating disorders genetics research. The comprehensive sample collection across multiple populations provided critical power for rare variant analysis. Data quality was excellent and metadata was comprehensive. The international collaboration made this possible and the data access process was smooth.',
+                    helpful: { yes: 12, no: 0 }
+                },
+                {
+                    name: 'Dr. Michael Patel',
+                    date: 'January 28, 2025',
+                    rating: 5,
+                    text: 'Outstanding resource for psychiatric genomics research. The blended genome-exome approach was exactly what we needed for our comparative analysis across eating disorder subtypes. Well-documented and easy to integrate with our existing pipelines. Highly recommend!',
+                    helpful: { yes: 8, no: 1 }
+                },
+                {
+                    name: 'Dr. Sarah Chen',
+                    date: 'December 10, 2024',
+                    rating: 4,
+                    text: 'Great dataset overall. Clinical phenotype data were thorough and the multi-site collection strategy is impressive. Only minor issue was that some metadata fields could be more standardized across sites, but this didn\'t impact our analysis significantly.',
+                    helpful: { yes: 5, no: 0 }
+                }
+            ];
+
+            return (
+                <Box>
+                    <TopNav />
+                    
+                    <Container maxWidth="xl" sx={{ py: 3 }}>
+                        {/* Back Button */}
+                        <Button 
+                            startIcon={<span>←</span>}
+                            sx={{ mb: 3, color: 'primary.main', fontWeight: 600 }}
+                        >
+                            Back to library
+                        </Button>
+
+                        {/* Study Header */}
+                        <Paper sx={{ p: 4, mb: 3 }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                                <Box sx={{ display: 'flex', gap: 3, flex: 1, alignItems: 'center' }}>
+                                    {/* Study Logo */}
+                                    <Box sx={{ 
+                                        width: 100, 
+                                        height: 100, 
+                                        bgcolor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                        borderRadius: 3,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        flexShrink: 0,
+                                        position: 'relative',
+                                        cursor: 'pointer',
+                                        overflow: 'hidden',
+                                        boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
+                                        transition: 'all 0.3s ease',
+                                        '&:hover': {
+                                            transform: 'scale(1.05)',
+                                            boxShadow: '0 6px 20px rgba(102, 126, 234, 0.4)',
+                                        },
+                                        '&:hover .upload-overlay': {
+                                            opacity: 1
+                                        }
+                                    }}>
+                                        {/* Logo Content */}
+                                        <Box sx={{ 
+                                            fontSize: 42,
+                                            fontWeight: 700,
+                                            color: 'white',
+                                            textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                                            letterSpacing: -1
+                                        }}>
+                                            GED
+                                        </Box>
+                                        <Box sx={{ 
+                                            fontSize: 10,
+                                            fontWeight: 600,
+                                            color: 'rgba(255,255,255,0.9)',
+                                            letterSpacing: 2,
+                                            textTransform: 'uppercase',
+                                            mt: 0.5
+                                        }}>
+                                            Research
+                                        </Box>
+                                        
+                                        {/* Upload Overlay */}
+                                        <Box 
+                                            className="upload-overlay"
+                                            sx={{ 
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                right: 0,
+                                                bottom: 0,
+                                                bgcolor: 'rgba(0, 0, 0, 0.75)',
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                opacity: 0,
+                                                transition: 'opacity 0.3s ease'
+                                            }}
+                                        >
+                                            <Box sx={{ fontSize: 24, mb: 0.5 }}>📤</Box>
+                                            <Typography variant="caption" sx={{ 
+                                                color: 'white', 
+                                                fontWeight: 600,
+                                                textAlign: 'center',
+                                                px: 1
+                                            }}>
+                                                Upload new logo
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                    
+                                    <Box sx={{ flex: 1 }}>
+                                        <Typography variant="subtitle1" sx={{ color: 'primary.main', fontWeight: 700, mb: 1.5 }}>
+                                            DUOS-S184
+                                        </Typography>
+                                        <Typography variant="h4" sx={{ fontWeight: 700, mb: 2 }}>
+                                            Genetics of Eating Disorders (GED) Sequencing Program
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                                <Button 
+                                    variant="contained" 
+                                    size="large"
+                                    sx={{ 
+                                        px: 3,
+                                        py: 1.5,
+                                        fontWeight: 600,
+                                        whiteSpace: 'nowrap'
+                                    }}
+                                >
+                                    Request Access to Dataset(s)
+                                </Button>
+                            </Box>
+                            
+                            <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', mb: 2 }}>
+                                <Chip label="⚡ Auto-Approval Available" sx={{ bgcolor: '#e8f5e9', color: '#2e7d32' }} />
+                                <Chip label="🔓 Open Access" sx={{ bgcolor: '#e3f2fd', color: '#1565c0' }} />
+                                <Chip label="🌐 External Access" sx={{ bgcolor: '#fff3e0', color: '#f57c00' }} />
+                                <Chip label="🔒 Controlled Access" sx={{ bgcolor: '#fce4ec', color: '#c2185b' }} />
+                            </Box>
+
+                            <Box sx={{ mb: 2 }}>
+                                <Chip 
+                                    label="Blended Genome Exome (BGE)" 
+                                    sx={{ 
+                                        bgcolor: '#fff', 
+                                        border: '2px solid #0948b7',
+                                        color: '#0948b7',
+                                        fontWeight: 700,
+                                        fontSize: '0.875rem',
+                                        height: 36,
+                                        px: 1
+                                    }} 
+                                />
+                            </Box>
+
+                            <Box sx={{ 
+                                display: 'grid', 
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', 
+                                gap: 1.5, 
+                                mb: 2 
+                            }}>
+                                <Paper elevation={0} sx={{ 
+                                    p: 1.5, 
+                                    bgcolor: '#f8f9fa', 
+                                    border: '1px solid #e0e0e0',
+                                    borderRadius: 1,
+                                    textAlign: 'center'
+                                }}>
+                                    <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 700 }}>
+                                        10
+                                    </Typography>
+                                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                                        🧬 Datasets
+                                    </Typography>
+                                </Paper>
+                                <Paper elevation={0} sx={{ 
+                                    p: 1.5, 
+                                    bgcolor: '#f8f9fa', 
+                                    border: '1px solid #e0e0e0',
+                                    borderRadius: 1,
+                                    textAlign: 'center'
+                                }}>
+                                    <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 700 }}>
+                                        2
+                                    </Typography>
+                                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                                        🔬 Models
+                                    </Typography>
+                                </Paper>
+                                <Paper elevation={0} sx={{ 
+                                    p: 1.5, 
+                                    bgcolor: '#f8f9fa', 
+                                    border: '1px solid #e0e0e0',
+                                    borderRadius: 1,
+                                    textAlign: 'center'
+                                }}>
+                                    <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 700 }}>
+                                        1
+                                    </Typography>
+                                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                                        💻 Workspaces
+                                    </Typography>
+                                </Paper>
+                                <Paper elevation={0} sx={{ 
+                                    p: 1.5, 
+                                    bgcolor: '#f8f9fa', 
+                                    border: '1px solid #e0e0e0',
+                                    borderRadius: 1,
+                                    textAlign: 'center'
+                                }}>
+                                    <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 700 }}>
+                                        3
+                                    </Typography>
+                                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                                        📚 Publications
+                                    </Typography>
+                                </Paper>
+                            </Box>
+
+                            <QuickStats />
+                        </Paper>
+
+                        {/* Three Column Layout with TOC */}
+                        <Grid container spacing={3}>
+                            {/* Table of Contents - Left Sidebar */}
+                            <Grid item xs={12} md={2.5}>
+                                <Box sx={{ position: 'sticky', top: 20 }}>
+                                    <Card>
+                                        <CardContent>
+                                            <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2, color: 'text.primary', fontSize: '1rem' }}>
+                                                Table of Contents
+                                            </Typography>
+                                            <Box component="nav" sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                                <Link 
+                                                    href="#study-description" 
+                                                    underline="none"
+                                                    sx={{ 
+                                                        fontSize: '0.875rem',
+                                                        color: 'text.secondary',
+                                                        py: 0.5,
+                                                        '&:hover': { color: 'primary.main' }
+                                                    }}
+                                                >
+                                                    Study Description
+                                                </Link>
+                                                <Link 
+                                                    href="#datasets" 
+                                                    underline="none"
+                                                    sx={{ 
+                                                        fontSize: '0.875rem',
+                                                        color: 'text.secondary',
+                                                        py: 0.5,
+                                                        '&:hover': { color: 'primary.main' }
+                                                    }}
+                                                >
+                                                    Datasets
+                                                </Link>
+                                                <Link 
+                                                    href="#dars" 
+                                                    underline="none"
+                                                    sx={{ 
+                                                        fontSize: '0.875rem',
+                                                        color: 'text.secondary',
+                                                        py: 0.5,
+                                                        '&:hover': { color: 'primary.main' }
+                                                    }}
+                                                >
+                                                    Past Data Access Requests
+                                                </Link>
+                                                <Link 
+                                                    href="#models" 
+                                                    underline="none"
+                                                    sx={{ 
+                                                        fontSize: '0.875rem',
+                                                        color: 'text.secondary',
+                                                        py: 0.5,
+                                                        '&:hover': { color: 'primary.main' }
+                                                    }}
+                                                >
+                                                    Models
+                                                </Link>
+                                                <Link 
+                                                    href="#workspaces" 
+                                                    underline="none"
+                                                    sx={{ 
+                                                        fontSize: '0.875rem',
+                                                        color: 'text.secondary',
+                                                        py: 0.5,
+                                                        '&:hover': { color: 'primary.main' }
+                                                    }}
+                                                >
+                                                    Workspaces
+                                                </Link>
+                                                <Link 
+                                                    href="#dar-trend" 
+                                                    underline="none"
+                                                    sx={{ 
+                                                        fontSize: '0.875rem',
+                                                        color: 'text.secondary',
+                                                        py: 0.5,
+                                                        '&:hover': { color: 'primary.main' }
+                                                    }}
+                                                >
+                                                    DAR Trend
+                                                </Link>
+                                                <Link 
+                                                    href="#reviews" 
+                                                    underline="none"
+                                                    sx={{ 
+                                                        fontSize: '0.875rem',
+                                                        color: 'text.secondary',
+                                                        py: 0.5,
+                                                        '&:hover': { color: 'primary.main' }
+                                                    }}
+                                                >
+                                                    Reviews
+                                                </Link>
+                                                <Link 
+                                                    href="#publications" 
+                                                    underline="none"
+                                                    sx={{ 
+                                                        fontSize: '0.875rem',
+                                                        color: 'text.secondary',
+                                                        py: 0.5,
+                                                        '&:hover': { color: 'primary.main' }
+                                                    }}
+                                                >
+                                                    Publications
+                                                </Link>
+                                            </Box>
+                                        </CardContent>
+                                    </Card>
+                                </Box>
+                            </Grid>
+
+                            {/* Main Content - Center Column */}
+                            <Grid item xs={12} md={6}>
+                                {/* Study Description */}
+                                <Card sx={{ mb: 3 }} id="study-description">
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>📄</span> Study Description
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ lineHeight: 1.8, color: 'text.secondary', mb: 2 }}>
+                                            The Eating Disorder Sequencing Program, funded by the Klarman Family Foundation, aims to investigate the rare and common genetic variations contributing to anorexia nervosa, atypical anorexia, bulimia nervosa, and atypical bulimia nervosa. The goal is to collect 20,000 samples are needed to conduct at the Broad Institute. The study encompasses samples from prospective and retrospective clinical recruitment initiatives, a direct-to-participant study in the United States, and biobank collections. Collections are from the United States, Mexico, Finland, Italy, and the United Kingdom. The collections from Mexico and Nationwide Children's Hospital have data from minors and adults. All other subjects are 18 years or older. KFF Funding Acknowledgement: At The Klarman Family Foundation, we seek to identify areas of unmet need and to advance solutions to addressing them. We believe passionately in the promise and importance of creative thinking, strategic leadership and strong organizations to help bring about change. Our intention is to help people thrive in vibrant and healthy communities.
+                                        </Typography>
+                                        
+                                        <Grid container spacing={2} sx={{ mt: 2 }}>
+                                            <Grid item xs={6}>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase' }}>
+                                                    Participants
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>11961</Typography>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase' }}>
+                                                    Phenotype
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>Eating Disorders</Typography>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase' }}>
+                                                    Species
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>Human</Typography>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase' }}>
+                                                    PI Name
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>Ben Neale, Mark Daly</Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </CardContent>
+                                </Card>
+
+
+                                {/* DARs Over Time */}
+                                <Card sx={{ mb: 3 }} id="dar-trend">
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>📊</span> Data Access Requests Over Time
+                                        </Typography>
+                                        <Typography variant="caption" sx={{ color: 'text.secondary', mb: 2, display: 'block' }}>
+                                            Cumulative DARs submitted since study launch
+                                        </Typography>
+                                        <DARChart />
+                                    </CardContent>
+                                </Card>
+
+                                {/* Datasets Table */}
+                                <Card sx={{ mb: 3 }} id="datasets">
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>📋</span> Datasets in This Study
+                                        </Typography>
+                                        <TableContainer>
+                                            <Table size="small">
+                                                <TableHead>
+                                                    <TableRow sx={{ bgcolor: '#f8f9fa' }}>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.length === datasetIds.length}
+                                                                indeterminate={selectedDatasets.length > 0 && selectedDatasets.length < datasetIds.length}
+                                                                onChange={handleSelectAllDatasets}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>Dataset Name</TableCell>
+                                                        <TableCell>DUOS ID</TableCell>
+                                                        <TableCell>Data Type</TableCell>
+                                                        <TableCell>Participants</TableCell>
+                                                        <TableCell>Data Location</TableCell>
+                                                        <TableCell>Data Use</TableCell>
+                                                        <TableCell>Export to Terra</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(0)}
+                                                                onChange={() => handleSelectDataset(0)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                kff_broad_ged_neale_daly_steinglass...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000652</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>64</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>OTH1</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(1)}
+                                                                onChange={() => handleSelectDataset(1)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                kff_broad_ged_neale_daly_castellini_i...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000653</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>57</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>OTH1</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(2)}
+                                                                onChange={() => handleSelectDataset(2)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                kff_broad_ged_neale_daly_artomov_...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000650</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>129</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>GRU</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(3)}
+                                                                onChange={() => handleSelectDataset(3)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                kff_broad_ged_neale_daly_basu_usa...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000651</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>1663</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>GRU</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(4)}
+                                                                onChange={() => handleSelectDataset(4)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                kff_broad_ged_neale_daly_breen_gbr...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000654</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>182</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>OTH1</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(5)}
+                                                                onChange={() => handleSelectDataset(5)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                broad_mgb_neale_daly_karlson_usa...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000658</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>4804</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>OTH1</TableCell>
+                                                        <TableCell>
+                                                            <Button variant="outlined" size="small" sx={{ textTransform: 'none', fontSize: '0.75rem' }}>
+                                                                Export
+                                                            </Button>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(6)}
+                                                                onChange={() => handleSelectDataset(6)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                kff_broad_ged_neale_daly_medellin_...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000649</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>831</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>GRU</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(7)}
+                                                                onChange={() => handleSelectDataset(7)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                kff_broad_ged_neale_daly_breen_gbr...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000655</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>190</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>OTH1</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(8)}
+                                                                onChange={() => handleSelectDataset(8)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                sc_broad_control_neale_daly_palotie...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000657</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>1901</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>OTH1</TableCell>
+                                                        <TableCell>
+                                                            <Button variant="outlined" size="small" sx={{ textTransform: 'none', fontSize: '0.75rem' }}>
+                                                                Export
+                                                            </Button>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedDatasets.includes(9)}
+                                                                onChange={() => handleSelectDataset(9)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                kff_broad_ged_neale_daly_palotie_fi...
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>DUOS-000656</TableCell>
+                                                        <TableCell>Blended Genome Exome (BGE)</TableCell>
+                                                        <TableCell>2140</TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" underline="hover" sx={{ fontSize: '0.875rem' }}>
+                                                                Terra Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>OTH1</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Models */}
+                                <Card sx={{ mb: 3 }} id="models">
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>🔬</span> Models in This Study
+                                        </Typography>
+                                        <TableContainer>
+                                            <Table size="small">
+                                                <TableHead>
+                                                    <TableRow sx={{ bgcolor: '#f8f9fa' }}>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedModels.length === modelIds.length}
+                                                                indeterminate={selectedModels.length > 0 && selectedModels.length < modelIds.length}
+                                                                onChange={handleSelectAllModels}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>Model Name</TableCell>
+                                                        <TableCell>Type</TableCell>
+                                                        <TableCell>Description</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedModels.includes(0)}
+                                                                onChange={() => handleSelectModel(0)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                Eating Disorders Risk Prediction Model
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>Polygenic Risk Score</TableCell>
+                                                        <TableCell sx={{ fontSize: '0.875rem' }}>Predictive model for anorexia nervosa risk</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedModels.includes(1)}
+                                                                onChange={() => handleSelectModel(1)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                BGE Variant Annotation Pipeline
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>Analysis Workflow</TableCell>
+                                                        <TableCell sx={{ fontSize: '0.875rem' }}>Automated pipeline for variant calling and annotation</TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Workspaces */}
+                                <Card sx={{ mb: 3 }} id="workspaces">
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>💻</span> Featured Workspaces
+                                        </Typography>
+                                        <TableContainer>
+                                            <Table size="small">
+                                                <TableHead>
+                                                    <TableRow sx={{ bgcolor: '#f8f9fa' }}>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedWorkspaces.length === workspaceIds.length}
+                                                                indeterminate={selectedWorkspaces.length > 0 && selectedWorkspaces.length < workspaceIds.length}
+                                                                onChange={handleSelectAllWorkspaces}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>Workspace Name</TableCell>
+                                                        <TableCell>Platform</TableCell>
+                                                        <TableCell>Description</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell padding="checkbox">
+                                                            <Checkbox 
+                                                                checked={selectedWorkspaces.includes(0)}
+                                                                onChange={() => handleSelectWorkspace(0)}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Link href="#" sx={{ fontWeight: 600 }}>
+                                                                GED Analysis Workspace
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell>Terra</TableCell>
+                                                        <TableCell sx={{ fontSize: '0.875rem' }}>Pre-configured workspace with analysis notebooks and workflows</TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Reviews */}
+                                <Card sx={{ mb: 3 }} id="reviews">
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>⭐</span> Researcher Reviews
+                                        </Typography>
+                                        
+                                        {/* Rating Summary */}
+                                        <Paper sx={{ p: 2.5, bgcolor: '#f8f9fa', mb: 3, display: 'flex', gap: 3 }}>
+                                            <Box sx={{ textAlign: 'center' }}>
+                                                <Typography variant="h2" sx={{ fontWeight: 700 }}>4.6</Typography>
+                                                <Rating value={4.6} readOnly precision={0.1} />
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>
+                                                    based on 18 reviews
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ flex: 1 }}>
+                                                {[
+                                                    { stars: 5, value: 72, count: 13 },
+                                                    { stars: 4, value: 16, count: 3 },
+                                                    { stars: 3, value: 11, count: 2 },
+                                                    { stars: 2, value: 0, count: 0 },
+                                                    { stars: 1, value: 0, count: 0 },
+                                                ].map((bar, i) => (
+                                                    <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+                                                        <Typography variant="caption" sx={{ width: 60 }}>
+                                                            {bar.stars} stars
+                                                        </Typography>
+                                                        <LinearProgress 
+                                                            variant="determinate" 
+                                                            value={bar.value} 
+                                                            sx={{ flex: 1, height: 8, borderRadius: 1 }}
+                                                        />
+                                                        <Typography variant="caption" sx={{ width: 40, textAlign: 'right' }}>
+                                                            {bar.count}
+                                                        </Typography>
+                                                    </Box>
+                                                ))}
+                                            </Box>
+                                        </Paper>
+
+                                        {/* Individual Reviews */}
+                                        {reviews.map((review, i) => (
+                                            <Review key={i} {...review} />
+                                        ))}
+                                    </CardContent>
+                                </Card>
+
+                                {/* Publications */}
+                                <Card id="publications">
+                                    <CardContent>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <span>📚</span> Related Publications
+                                        </Typography>
+                                        
+                                        {[
+                                            {
+                                                title: 'Genome-wide association study identifies eight risk loci and implicates metabo-psychiatric origins for anorexia nervosa',
+                                                authors: 'Watson HJ, Yilmaz Z, Thornton LM, et al.',
+                                                journal: 'Nature Genetics',
+                                                year: '2019'
+                                            },
+                                            {
+                                                title: 'Genetic architecture of eating disorders: insights from multi-trait GWAS',
+                                                authors: 'Patel KR, Levey DF, Gelernter J, et al.',
+                                                journal: 'Molecular Psychiatry',
+                                                year: '2021'
+                                            },
+                                            {
+                                                title: 'Biological and environmental factors influencing the onset of eating disorders',
+                                                authors: 'Bulik CM, Blake L, Austin J.',
+                                                journal: 'Annual Review of Clinical Psychology',
+                                                year: '2022'
+                                            }
+                                        ].map((pub, i) => (
+                                            <Paper key={i} sx={{ p: 2, mb: 1.5, bgcolor: '#f8f9fa', borderLeft: '4px solid', borderColor: 'primary.main' }}>
+                                                <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+                                                    {pub.title}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1 }}>
+                                                    {pub.authors} | {pub.journal} | {pub.year}
+                                                </Typography>
+                                                <Link href="#" sx={{ fontSize: 13, fontWeight: 600 }}>
+                                                    View Publication →
+                                                </Link>
+                                            </Paper>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+
+                            {/* Right Sidebar */}
+                            <Grid item xs={12} md={3.5}>
+
+                                {/* Impact Over Time */}
+                                <Card sx={{ mb: 2 }}>
+                                    <CardContent>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                                            <Typography variant="caption" sx={{ color: 'text.secondary' }}>From</Typography>
+                                            <Link href="https://through.bio" target="_blank" sx={{ textDecoration: 'none' }}>
+                                                <Box sx={{ 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    gap: 0.75, 
+                                                    px: 1.5, 
+                                                    py: 0.5, 
+                                                    bgcolor: '#f8f9fa', 
+                                                    borderRadius: 1 
+                                                }}>
+                                                    <Box sx={{ width: 20, height: 20, bgcolor: 'primary.main', borderRadius: 0.5 }} />
+                                                    <Typography variant="caption" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                                                        through.bio
+                                                    </Typography>
+                                                </Box>
+                                            </Link>
+                                        </Box>
+
+                                        <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
+                                            📈 Impact Over Time
+                                        </Typography>
+                                        <Typography variant="caption" sx={{ color: 'text.secondary', mb: 2.5, display: 'block' }}>
+                                            This dataset has contributed to <strong>18 clinical trials</strong> through <strong>3k papers</strong>
+                                        </Typography>
+
+                                        <ImpactTimeline />
+
+                                        {/* Impact Milestones */}
+                                        <Paper sx={{ p: 2, bgcolor: '#f8f9fa', mb: 2, mt: 2 }}>
+                                            <Typography variant="caption" sx={{ fontWeight: 700, display: 'block', mb: 1.5 }}>
+                                                Impact Milestones
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ display: 'block', mb: 1 }}>
+                                                <strong>1st clinical trial:</strong> 2 years
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ display: 'block', mb: 1 }}>
+                                                <strong>10th clinical trial:</strong> 4 years
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ display: 'block' }}>
+                                                <strong>100th clinical trial:</strong> 7 years
+                                            </Typography>
+                                        </Paper>
+
+                                        {/* Citations Until Trial */}
+                                        <Paper sx={{ p: 2, bgcolor: '#f8f9fa' }}>
+                                            <Typography variant="caption" sx={{ fontWeight: 700, display: 'block', mb: 0.5 }}>
+                                                Citations Until Trial
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1.5 }}>
+                                                Number of downstream citations until clinical trials
+                                            </Typography>
+                                            
+                                            {[
+                                                { value: 2, count: 6 },
+                                                { value: 23, count: 125 },
+                                                { value: 100, count: 547 },
+                                            ].map((item, i) => (
+                                                <Box key={i} sx={{ display: 'flex', gap: 1, mb: 1, alignItems: 'center' }}>
+                                                    <LinearProgress 
+                                                        variant="determinate" 
+                                                        value={item.value} 
+                                                        sx={{ flex: 1, height: 8, borderRadius: 1 }}
+                                                    />
+                                                    <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 50, textAlign: 'right' }}>
+                                                        {item.count}
+                                                    </Typography>
+                                                </Box>
+                                            ))}
+                                            
+                                            <Divider sx={{ my: 1.5 }} />
+                                            <Typography variant="caption" sx={{ display: 'block', mb: 0.5 }}>
+                                                <strong>678 total papers</strong> in citation network
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ display: 'block' }}>
+                                                <strong>393 clinical trials</strong> citing papers in network
+                                            </Typography>
+                                        </Paper>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Data Access Requests */}
+                                <Card sx={{ mb: 2 }} id="dars">
+                                    <CardContent>
+                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                                            <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                                                📋 Past Data Access Requests for Datasets in This Study
+                                            </Typography>
+                                            <Button 
+                                                size="small" 
+                                                onClick={() => setDarsExpanded(!darsExpanded)}
+                                                sx={{ textTransform: 'none', fontSize: '0.75rem' }}
+                                            >
+                                                {darsExpanded ? 'Less' : 'View All'}
+                                            </Button>
+                                        </Box>
+                                        
+                                        {[
+                                            {
+                                                darNumber: 'DAR-247',
+                                                submitter: 'Dr. Sarah Chen',
+                                                institution: 'Stanford University',
+                                                date: 'Jan 15, 2025',
+                                                title: 'Genetic Risk Factors for Anorexia Nervosa in Multi-Ethnic Populations',
+                                                researchUse: 'This research aims to identify novel genetic variants associated with anorexia nervosa susceptibility across diverse ethnic backgrounds. We will conduct genome-wide association studies (GWAS) and polygenic risk score analyses to understand the genetic architecture of eating disorders and improve risk prediction models for clinical application.'
+                                            },
+                                            {
+                                                darNumber: 'DAR-238',
+                                                submitter: 'Dr. Michael Rodriguez',
+                                                institution: 'Johns Hopkins',
+                                                date: 'Dec 28, 2024',
+                                                title: 'Metabolic Pathway Analysis in Eating Disorder Genetics',
+                                                researchUse: 'We propose to investigate the role of metabolic pathways in eating disorder etiology by integrating genomic data with metabolomic profiles. The study will focus on identifying gene-metabolite interactions that contribute to disease onset and progression, with potential implications for targeted therapeutic interventions.'
+                                            },
+                                            {
+                                                darNumber: 'DAR-231',
+                                                submitter: 'Dr. Emily Thompson',
+                                                institution: 'Harvard Medical School',
+                                                date: 'Dec 10, 2024',
+                                                title: 'Comparative Analysis of Bulimia Nervosa and Anorexia Nervosa',
+                                                researchUse: 'This project will perform a comprehensive comparative genomic analysis between bulimia nervosa and anorexia nervosa cohorts to identify shared and distinct genetic risk factors. Results will inform our understanding of eating disorder subtypes and may reveal new targets for personalized treatment approaches.'
+                                            }
+                                        ].slice(0, darsExpanded ? 3 : 1).map((dar, i) => (
+                                            <Paper key={i} sx={{ 
+                                                p: 1.5, 
+                                                mb: 1.5, 
+                                                bgcolor: '#f8f9fa',
+                                                border: '1px solid #e0e0e0',
+                                                '&:last-child': { mb: 0 }
+                                            }}>
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                                                    <Typography variant="caption" sx={{ 
+                                                        color: 'primary.main', 
+                                                        fontWeight: 700
+                                                    }}>
+                                                        {dar.darNumber}
+                                                    </Typography>
+                                                    <Chip 
+                                                        label="Approved" 
+                                                        size="small"
+                                                        sx={{ 
+                                                            bgcolor: '#e8f5e9', 
+                                                            color: '#2e7d32',
+                                                            fontWeight: 600,
+                                                            height: 20,
+                                                            fontSize: '0.65rem'
+                                                        }} 
+                                                    />
+                                                </Box>
+                                                
+                                                <Typography variant="caption" sx={{ fontWeight: 600, display: 'block', mb: 1 }}>
+                                                    {dar.title}
+                                                </Typography>
+                                                
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>
+                                                    {dar.submitter} • {dar.institution}
+                                                </Typography>
+                                                
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1, fontSize: '0.7rem' }}>
+                                                    {dar.date}
+                                                </Typography>
+
+                                                <Box sx={{ 
+                                                    pt: 1, 
+                                                    borderTop: '1px solid #e0e0e0',
+                                                    mt: 1
+                                                }}>
+                                                    <Typography variant="caption" sx={{ 
+                                                        color: 'text.secondary', 
+                                                        fontWeight: 600,
+                                                        textTransform: 'uppercase',
+                                                        letterSpacing: 0.5,
+                                                        display: 'block',
+                                                        mb: 0.5,
+                                                        fontSize: '0.65rem'
+                                                    }}>
+                                                        Research Use
+                                                    </Typography>
+                                                    <Typography variant="caption" sx={{ 
+                                                        color: 'text.secondary', 
+                                                        lineHeight: 1.5,
+                                                        display: 'block',
+                                                        fontSize: '0.7rem'
+                                                    }}>
+                                                        {dar.researchUse}
+                                                    </Typography>
+                                                </Box>
+                                            </Paper>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+
+                                {/* Frequently Requested Together */}
+                                <Card sx={{ mb: 2 }}>
+                                    <CardContent>
+                                        <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                                            🔗 Researchers who request datasets from this study also request datasets from these studies
+                                        </Typography>
+                                        <Typography variant="caption" sx={{ color: 'text.secondary', mb: 2, display: 'block' }}>
+                                            Based on co-request patterns
+                                        </Typography>
+                                        
+                                        {[
+                                            { title: 'iPSYCH Psychiatric Genomics', meta: 'Psychiatric disorders | 86,189 participants', dars: '142 DARs' },
+                                            { title: 'UK Biobank Mental Health', meta: 'Mental health phenotypes | 157,366 participants', dars: '98 DARs' },
+                                        ].map((rec, i) => (
+                                            <Paper key={i} sx={{ 
+                                                p: 2, 
+                                                mb: 1.5, 
+                                                bgcolor: '#f8f9fa',
+                                                cursor: 'pointer',
+                                                border: '2px solid transparent',
+                                                transition: 'all 0.2s',
+                                                '&:hover': {
+                                                    borderColor: 'primary.main',
+                                                    bgcolor: 'white',
+                                                    boxShadow: 1
+                                                }
+                                            }}>
+                                                <Typography variant="body2" sx={{ color: 'primary.main', fontWeight: 600, mb: 0.5 }}>
+                                                    {rec.title}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>
+                                                    {rec.meta}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'secondary.main', fontWeight: 600 }}>
+                                                    {rec.dars}
+                                                </Typography>
+                                            </Paper>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+
+                                {/* You Might Also Like */}
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                                            💡 You Might Also Like
+                                        </Typography>
+                                        <Typography variant="caption" sx={{ color: 'text.secondary', mb: 2, display: 'block' }}>
+                                            Based on your research interests:
+                                        </Typography>
+                                        
+                                        {[
+                                            { title: 'PGC Anorexia Nervosa GWAS', meta: 'Psychiatric genomics | 16,992 participants', badge: '⚡ Auto-approval' },
+                                            { title: 'All of Us - Mental Health', meta: 'Diverse cohort | 245,388 participants', badge: '67 DARs' },
+                                            { title: 'Vanderbilt BioVU Psychiatry', meta: 'EHR-linked genomics | 94,474 participants', badge: '54 DARs' },
+                                        ].map((rec, i) => (
+                                            <Paper key={i} sx={{ 
+                                                p: 2, 
+                                                mb: 1.5, 
+                                                bgcolor: '#f8f9fa',
+                                                cursor: 'pointer',
+                                                border: '2px solid transparent',
+                                                transition: 'all 0.2s',
+                                                '&:hover': {
+                                                    borderColor: 'primary.main',
+                                                    bgcolor: 'white',
+                                                    boxShadow: 1
+                                                }
+                                            }}>
+                                                <Typography variant="body2" sx={{ color: 'primary.main', fontWeight: 600, mb: 0.5 }}>
+                                                    {rec.title}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>
+                                                    {rec.meta}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: 'secondary.main', fontWeight: 600 }}>
+                                                    {rec.badge}
+                                                </Typography>
+                                            </Paper>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </Box>
+            );
+        }
+
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
